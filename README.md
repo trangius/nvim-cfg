@@ -17,6 +17,7 @@ Search
 Ctrl-f: Fuzzy search in current buffer
 Ctrl-b: Find existing buffers
 :%s/search/replace/g: all in whole file
+    -> using ctrl-r+" will paste current register
 
 Code navigation
 Alt-a: Toggle navigation view
