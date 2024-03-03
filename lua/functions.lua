@@ -12,28 +12,6 @@ function M.reload_lua_config()
 end
 
 
-function M.search_and_replace_with_confirmation()
-  local search_string = vim.fn.input("Search for: ")
-  local replacement_string = vim.fn.input("Replace with: ")
-  if search_string == "" or replacement_string == "" then
-    print("Search and replace cancelled.")
-    return
-  end
-  vim.cmd('%s/'..search_string..'/'..replacement_string..'/gc')
-end
-
-
-function M.search_and_replace_all()
-  local search_string = vim.fn.input("Search for: ")
-  local replacement_string = vim.fn.input("Replace with: ")
-  if search_string == "" or replacement_string == "" then
-    print("Search and replace cancelled.")
-    return
-  end
-  vim.cmd('%s/'..search_string..'/'..replacement_string..'/g')
-end
-
-
 function M.search_in_current_buffer()
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,

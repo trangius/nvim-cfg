@@ -53,7 +53,6 @@ require('which-key').register {
 	['<leader>d'] = { name = '[d]iagnostics', _ = 'which_key_ignore' },
 	['<leader>f'] = { name = '[f]ind', _ = 'which_key_ignore' },
 	['<leader>p'] = { name = '[p]ersistence', _ = 'which_key_ignore' },
-	['<leader>s'] = { name = '[s]earch & replace', _ = 'which_key_ignore' },
 --	['<leader>w'] = { name = '[w]orkspace', _ = 'which_key_ignore' },
 }
 
@@ -103,7 +102,7 @@ vim.keymap.set('n', '<leader>/', functions.search_in_current_buffer, { desc = 'f
 vim.keymap.set('n', '<C-f>', functions.search_in_current_buffer, { desc = 'fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>r', require('telescope.builtin').oldfiles, { desc = '[r]ecently opened files' })
-
+vim.keymap.set('n', '<leader>.', require('telescope').extensions.file_browser.file_browser, { desc = 'Browse files' })
 
 --------------------------------------------------------------------------
 -- CODE KEYMAPS (requires LSP, telescope)
@@ -159,8 +158,6 @@ vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]]
 -- MISC FUNCTIONS (defined in functions.lua) KEYMAPS
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>n', functions.reload_lua_config, { noremap = true, silent = true, desc = 'reload [n]vim config' })
-vim.api.nvim_set_keymap('n', '<leader>sc', ':lua require("functions").search_and_replace_with_confirmation()<CR>', { noremap = true, silent = true, desc='search and replace'})
-vim.api.nvim_set_keymap('n', '<leader>sd', ':lua require("functions").search_and_replace_all()<CR>', { noremap = true, silent = true, desc='search & replace ALL' })
 vim.api.nvim_set_keymap('n', '<C-m>', ':lua require("functions").open_myhelp_popup()<CR>', {noremap = true, silent = true})
 
 --------------------------------------------------------------------------
