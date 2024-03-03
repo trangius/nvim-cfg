@@ -65,6 +65,7 @@ require('lazy').setup({
 			},
 		},
 	},
+
 	-- use telescope as a file browser
 	{
 		"nvim-telescope/telescope-file-browser.nvim",
