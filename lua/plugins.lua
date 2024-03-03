@@ -1,12 +1,82 @@
 require('lazy').setup({
-	-- Git related plugins
+	---------------------------------------------------------------
+	-- LOOK & FEEL
+	---------------------------------------------------------------
+	-- Theme inspired by Atom
+	{
+		'navarasu/onedark.nvim',
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme 'onedark'
+		end,
+	},
+
+	-- Nice scrollbar
+	'petertriho/nvim-scrollbar',
+
+	-- a sidebar with class/function list to step trough
+	{
+		"stevearc/aerial.nvim",
+		config = function()
+			require('aerial').setup({})
+		end
+	},
+
+	-- Set lualine as statusline
+	{
+		'nvim-lualine/lualine.nvim',
+		opts = {
+			options = {
+				icons_enabled = false,
+				theme = 'onedark',
+				component_separators = '|',
+				section_separators = '',
+			},
+		  sections = {
+			lualine_a = {'mode'},
+			lualine_b = {'buffers'},
+			lualine_c = {}, -- do not print name of current buffer, since we already see which one since lualine_b shows buffers
+		  },
+
+		},
+	},
+
+	-- Useful plugin to show you pending keybinds.
+	{ 'folke/which-key.nvim', opts = {} },
+
+
+	-- Telescope
+	{
+		'nvim-telescope/telescope.nvim',
+		branch = '0.1.x',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			-- Fuzzy Finder Algorithm which requires local dependencies to be built.
+			-- Only load if `make` is available. Make sure you have the system
+			-- requirements installed.
+			{
+				'nvim-telescope/telescope-fzf-native.nvim',
+				-- NOTE: If you are having trouble with this installation,
+				--			 refer to the README for telescope-fzf-native for more instructions.
+				build = 'make',
+				cond = function()
+					return vim.fn.executable 'make' == 1
+				end,
+			},
+		},
+	},
+	-- use telescope as a file browser
+	{
+		"nvim-telescope/telescope-file-browser.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+	},
+
+
+	---------------------------------------------------------------
+	-- GIT PLUGINS
+	---------------------------------------------------------------
 	'tpope/vim-fugitive', -- so we can run :Git from vim
 	'tpope/vim-rhubarb',
-	
-	-- nice scrollbar
-	'petertriho/nvim-scrollbar',
-	-- NOTE: This is where your plugins related to LSP can be installed.
-	--	The configuration is done below. Search for lspconfig to find it below.
 
 	-- persistence, tool to save/load vim sessions
 	{
@@ -16,69 +86,9 @@ require('lazy').setup({
 		-- add any custom options here
 		}
 	},
+
+	-- Adds git related signs to the gutter, as well as utilities for managing changes
 	{
-		"stevearc/aerial.nvim",
-		config = function()
-			require('aerial').setup({})
-		end
-	},
-	{
-		-- LSP Configuration & Plugins
-		'neovim/nvim-lspconfig',
-		dependencies = {
-			-- Automatically install LSPs to stdpath for neovim
-			'williamboman/mason.nvim',
-			'williamboman/mason-lspconfig.nvim',
-
-			-- Useful status updates for LSP
-			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-			{ 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-
-			-- Additional lua configuration, makes nvim stuff amazing!
-			'folke/neodev.nvim',
-		},
-	},
-
-	{
-		-- Autocompletion
-		'hrsh7th/nvim-cmp',
-		dependencies = {
-			-- Snippet Engine & its associated nvim-cmp source
-			'L3MON4D3/LuaSnip',
-			'saadparwaiz1/cmp_luasnip',
-
-			-- Adds LSP completion capabilities
-			'hrsh7th/cmp-nvim-lsp',
-
-			-- Adds a number of user-friendly snippets
-			'rafamadriz/friendly-snippets',
-		},
-	},
-
-	-- copilot
---	"github/copilot.vim",
-    {
-        "zbirenbaum/copilot.lua",
-        event = "VimEnter",
-        config = function()
-            vim.defer_fn(function()
-                require("copilot").setup()
-            end, 100) -- Fördröjning för att säkerställa att allt laddas korrekt
-        end,
-    },
-    -- Lägg till copilot-cmp för integration med nvim-cmp
-    {
-        "zbirenbaum/copilot-cmp",
-        after = "copilot.lua", -- Säkerställ att det laddas efter copilot.lua
-        config = function()
-            require("copilot_cmp").setup()
-        end
-    },
-
-	-- Useful plugin to show you pending keybinds.
-	{ 'folke/which-key.nvim', opts = {} },
-	{
-		-- Adds git related signs to the gutter, as well as utilities for managing changes
 		'lewis6991/gitsigns.nvim',
 		opts = {
 			-- See `:help gitsigns.txt`
@@ -116,36 +126,66 @@ require('lazy').setup({
 		},
 	},
 
-	{
-		-- Theme inspired by Atom
-		'navarasu/onedark.nvim',
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme 'onedark'
-		end,
-	},
-	{
-		-- Set lualine as statusline
-		'nvim-lualine/lualine.nvim',
-		-- See `:help lualine.txt`
-		opts = {
-			options = {
-				icons_enabled = false,
-				theme = 'onedark',
-				component_separators = '|',
-				section_separators = '',
-			},
-		  sections = {
-			lualine_a = {'mode'},
-			lualine_b = {'buffers'},
-			lualine_c = {}, -- do not print name of current buffer, since we already see which one since lualine_b shows buffers
-		  },
 
+
+	---------------------------------------------------------------
+	-- CODE HELPERS
+	---------------------------------------------------------------
+	-- LSP Configuration & Plugins
+	{
+		'neovim/nvim-lspconfig',
+		dependencies = {
+			-- Automatically install LSPs to stdpath for neovim
+			'williamboman/mason.nvim',
+			'williamboman/mason-lspconfig.nvim',
+
+			-- Useful status updates for LSP
+			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+			{ 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+
+			-- Additional lua configuration, makes nvim stuff amazing!
+			'folke/neodev.nvim',
 		},
 	},
 
+	-- Autocompletion
 	{
-		-- Add indentation guides even on blank lines
+		'hrsh7th/nvim-cmp',
+		dependencies = {
+			-- Snippet Engine & its associated nvim-cmp source
+			'L3MON4D3/LuaSnip',
+			'saadparwaiz1/cmp_luasnip',
+
+			-- Adds LSP completion capabilities
+			'hrsh7th/cmp-nvim-lsp',
+
+			-- Adds a number of user-friendly snippets
+			'rafamadriz/friendly-snippets',
+		},
+	},
+
+	-- Github Copilot
+    {
+        "zbirenbaum/copilot.lua",
+        event = "VimEnter",
+        config = function()
+            vim.defer_fn(function()
+                require("copilot").setup()
+            end,
+			30) -- delay to make sure everything loads correctly
+        end,
+    },
+    {
+        "zbirenbaum/copilot-cmp",
+        after = "copilot.lua",
+        config = function()
+            require("copilot_cmp").setup()
+        end
+    },
+
+
+	-- Add indentation guides even on blank lines
+	{
 		'lukas-reineke/indent-blankline.nvim',
 		-- Enable `lukas-reineke/indent-blankline.nvim`
 		-- See `:help ibl`
@@ -156,33 +196,8 @@ require('lazy').setup({
 	-- "gc" to comment visual regions/lines
 	{ 'numToStr/Comment.nvim', opts = {} },
 
-	-- Telescope
+	-- Highlight, edit, and navigate code
 	{
-		'nvim-telescope/telescope.nvim',
-		branch = '0.1.x',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			-- Fuzzy Finder Algorithm which requires local dependencies to be built.
-			-- Only load if `make` is available. Make sure you have the system
-			-- requirements installed.
-			{
-				'nvim-telescope/telescope-fzf-native.nvim',
-				-- NOTE: If you are having trouble with this installation,
-				--			 refer to the README for telescope-fzf-native for more instructions.
-				build = 'make',
-				cond = function()
-					return vim.fn.executable 'make' == 1
-				end,
-			},
-		},
-	},
-	-- use telescope as a file browser
-	{
-		"nvim-telescope/telescope-file-browser.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-	},
-	{
-		-- Highlight, edit, and navigate code
 		'nvim-treesitter/nvim-treesitter',
 		dependencies = {
 			'nvim-treesitter/nvim-treesitter-textobjects',
@@ -251,7 +266,7 @@ require("scrollbar").setup({
 	},
 })
 
--- copilot config
+-- Configure copliot
 require("copilot").setup({
   suggestion = { enabled = false },
   panel = { enabled = false },
