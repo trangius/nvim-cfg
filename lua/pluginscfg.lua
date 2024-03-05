@@ -1,6 +1,11 @@
 ---------------------------------------------------------------
 -- LOOK & FEEL
 ---------------------------------------------------------------
+-- Onedark setup
+require('onedark').setup {
+    style = 'warm'
+}
+require('onedark').load()
 -- Scrollbar setup
 require("scrollbar").setup({
 	handle = {
