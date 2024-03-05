@@ -103,7 +103,11 @@ vim.keymap.set('n', '<C-f>', functions.search_in_current_buffer, { desc = 'fuzzi
 
 vim.keymap.set('n', '<leader>r', require('telescope.builtin').oldfiles, { desc = '[r]ecently opened files' })
 vim.keymap.set('n', '<leader>.', require('telescope').extensions.file_browser.file_browser, { desc = 'Browse files' })
-
+vim.keymap.set('n', '<leader>,', function()
+	require('telescope').extensions.file_browser.file_browser({
+		hidden = true, -- show hidden
+		respect_gitignore = false,})
+end, {desc = 'Browse files (show all)'})
 --------------------------------------------------------------------------
 -- CODE KEYMAPS (requires LSP, telescope)
 --------------------------------------------------------------------------
