@@ -80,6 +80,17 @@ require('lazy').setup({
 			require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
 		end
 	},
+
+	-- Spectre for search and replace, need riggrep and gnu-zed installed
+	{
+		'windwp/nvim-spectre',
+		requires = {
+			'nvim-lua/plenary.nvim',
+			'BurntSushi/ripgrep' -- 
+		},
+		config = function() require('spectre').setup() end
+	},
+
 	---------------------------------------------------------------
 	-- GIT PLUGINS
 	---------------------------------------------------------------

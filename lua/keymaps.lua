@@ -54,6 +54,7 @@ require('which-key').register {
 	['<leader>d'] = { name = '[d]iagnostics', _ = 'which_key_ignore' },
 	['<leader>f'] = { name = '[f]ind', _ = 'which_key_ignore' },
 	['<leader>p'] = { name = '[p]ersistence', _ = 'which_key_ignore' },
+	['<leader>r'] = { name = 'search & [r]eplace', _ = 'which_key_ignore' },
 --	['<leader>w'] = { name = '[w]orkspace', _ = 'which_key_ignore' },
 }
 
@@ -102,7 +103,6 @@ vim.keymap.set('n', '<leader><leader>', require('telescope.builtin').find_files,
 vim.keymap.set('n', '<leader>/', functions.search_in_current_buffer, { desc = 'fuzzily search in current buffer (Ctrl-f)' })
 vim.keymap.set('n', '<C-f>', functions.search_in_current_buffer, { desc = 'fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>r', require('telescope.builtin').oldfiles, { desc = '[r]ecently opened files' })
 vim.keymap.set('n', '<leader>.', require('telescope').extensions.file_browser.file_browser, { desc = 'Browse files' })
 vim.keymap.set('n', '<leader>,', function()
 	require('telescope').extensions.file_browser.file_browser({
@@ -111,6 +111,15 @@ vim.keymap.set('n', '<leader>,', function()
 end, {desc = 'Browse files (show all)'})
 
 
+--------------------------------------------------------------------------
+-- Spectre search/replace
+--------------------------------------------------------------------------
+vim.keymap.set('n', '<leader>rr', require('spectre').toggle, { desc = 'toggle spect[r]e' })
+vim.keymap.set('n', '<leader>rw', function() require('spectre').open_visual({select_word=true}) end, { desc = "Replace current [w]ord" })
+vim.keymap.set('n', '<leader>rf', function() require('spectre').open_file_search({select_word=true}) end, { desc = "Replace in current [f]ile" })
+vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current word"
+})
 --------------------------------------------------------------------------
 -- CODE KEYMAPS (requires LSP, telescope)
 --------------------------------------------------------------------------
@@ -166,6 +175,7 @@ vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]]
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>n', functions.reload_lua_config, { noremap = true, silent = true, desc = 'reload [n]vim config' })
 vim.api.nvim_set_keymap('n', '<C-m>', ':lua require("functions").open_myhelp_popup()<CR>', {noremap = true, silent = true})
+
 
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS
