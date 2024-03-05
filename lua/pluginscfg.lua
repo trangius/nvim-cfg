@@ -46,6 +46,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	pattern = '*',
 })
 
+
 ---------------------------------------------------------------
 -- CODE HELPERS
 ---------------------------------------------------------------
@@ -87,7 +88,6 @@ local servers = {
 		},
 	},
 }
-
 
 -- Configure Treesitter
 -- See `:help nvim-treesitter`
@@ -148,8 +148,6 @@ vim.defer_fn(function()
 		},
 	}
 end, 0)
-
-
 
 -- Setup neovim lua configuration
 require('neodev').setup()

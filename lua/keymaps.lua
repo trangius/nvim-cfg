@@ -32,6 +32,7 @@ vim.keymap.set("v", "L", "$", { noremap = true })
 -- use hop
 vim.api.nvim_set_keymap('n', '<C-o>', "<cmd>lua require'hop'.hint_char1()<cr>", {noremap = true, silent = true})
 
+
 --------------------------------------------------------------------------
 -- TAB INDENTATION...
 --------------------------------------------------------------------------
@@ -68,6 +69,8 @@ local visual_mappings = {
 
 -- Registrera för visuellt läge
 require('which-key').register(visual_mappings, { mode = "v" })
+
+
 --------------------------------------------------------------------------
 -- BUFFER KEYMAPS
 --------------------------------------------------------------------------
@@ -110,8 +113,8 @@ vim.keymap.set('n', '<C-b>', require('telescope.builtin').buffers, { desc = 'fin
 vim.keymap.set('n', '<leader><leader>', require('telescope.builtin').find_files, { desc = 'find file' })
 --vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'help' })
 
-vim.keymap.set('n', '<leader>/', functions.search_in_current_buffer, { desc = 'fuzzily search in current buffer (Ctrl-f)' })
-vim.keymap.set('n', '<C-f>', functions.search_in_current_buffer, { desc = 'fuzzily search in current buffer' })
+vim.keymap.set('n', '<leader>/', functions.search_in_current_buffer, { desc = 'fuzzily buffer search (Ctrl-f)' })
+vim.keymap.set('n', '<C-f>', functions.search_in_current_buffer, { desc = 'fuzzily buffer search' })
 
 vim.keymap.set('n', '<leader>.', require('telescope').extensions.file_browser.file_browser, { desc = 'Browse files' })
 vim.keymap.set('n', '<leader>,', function()

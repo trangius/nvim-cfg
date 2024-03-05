@@ -91,6 +91,7 @@ require('lazy').setup({
 		config = function() require('spectre').setup() end
 	},
 
+
 	---------------------------------------------------------------
 	-- GIT PLUGINS
 	---------------------------------------------------------------
@@ -144,7 +145,6 @@ require('lazy').setup({
 			end,
 		},
 	},
-
 
 
 	---------------------------------------------------------------
@@ -227,16 +227,3 @@ require('lazy').setup({
 })
 
 
--- make nvim start from last position
-vim.api.nvim_create_augroup("RememberLastPosition", { clear = true })
-vim.api.nvim_create_autocmd("BufReadPost", {
-	group = "RememberLastPosition",
-	pattern = "*",
-	callback = function()
-		local last_line = vim.fn.line("'\"")
-		local last_line_in_buffer = vim.fn.line("$")
-		if last_line > 0 and last_line <= last_line_in_buffer then
-			vim.api.nvim_win_set_cursor(0, { last_line, 0 })
-		end
-	end,
-})
