@@ -116,11 +116,13 @@ end, {desc = 'Browse files (show all)'})
 -- Spectre search/replace
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>rr', require('spectre').toggle, { desc = 'toggle spect[r]e' })
+vim.keymap.set('n', '<C-r>', require('spectre').toggle, { desc = 'toggle spect[r]e' })
 vim.keymap.set('n', '<leader>rw', function() require('spectre').open_visual({select_word=true}) end, { desc = "Replace current [w]ord" })
 vim.keymap.set('n', '<leader>rf', function() require('spectre').open_file_search({select_word=true}) end, { desc = "Replace in current [f]ile" })
-vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-    desc = "Search current word"
-})
+vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {desc = "Search current word"})
+vim.keymap.set('v', '<C-r>', '<esc><cmd>lua require("spectre").open_visual()<CR>', {desc = "Search current word"})
+
+
 --------------------------------------------------------------------------
 -- CODE KEYMAPS (requires LSP, telescope)
 --------------------------------------------------------------------------
