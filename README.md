@@ -19,7 +19,7 @@ g+h/j/k/l: move to split buffer
 Search
 Ctrl-f: Fuzzy search in current buffer
 Ctrl-b: Find existing buffers
-Ctrl-r: Search/replace with Spectre
+Ctrl-p: Search/replace with Spectre
 :%s/search/replace/g: all in whole file
     -> using ctrl-r+" will paste current register
 
