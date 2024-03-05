@@ -43,13 +43,13 @@ vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
 vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
 
 
-
 --------------------------------------------------------------------------
 -- WHICH-KEY SETTINGS (FANCY HELPER FOR <LEADER>)
 --------------------------------------------------------------------------
-require('which-key').register {
+-- Genvägar tillgängliga i normalt läge
+local normal_mappings = {
 --	['<leader>a'] = { name = '[a]eral', _ = 'which_key_ignore' },
-	['<leader>b'] = { name = '[b]buffer',_ = 'which_key_ignore' },
+	['<leader>b'] = { name = '[b]buffer', _ = 'which_key_ignore' },
 	['<leader>c'] = { name = '[c]ode', _ = 'which_key_ignore' },
 	['<leader>d'] = { name = '[d]iagnostics', _ = 'which_key_ignore' },
 	['<leader>f'] = { name = '[f]ind', _ = 'which_key_ignore' },
@@ -58,7 +58,16 @@ require('which-key').register {
 --	['<leader>w'] = { name = '[w]orkspace', _ = 'which_key_ignore' },
 }
 
+-- Registrera för normalt läge
+require('which-key').register(normal_mappings, { mode = "n" })
 
+-- Genvägar endast för visuellt läge
+local visual_mappings = {
+	['<leader>r'] = { name = 'search & [r]eplace', _ = 'which_key_ignore' },
+}
+
+-- Registrera för visuellt läge
+require('which-key').register(visual_mappings, { mode = "v" })
 --------------------------------------------------------------------------
 -- BUFFER KEYMAPS
 --------------------------------------------------------------------------
