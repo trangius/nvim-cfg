@@ -14,6 +14,7 @@ Buffer Management
 Ctrl-x: Close buffer
 Alt-h: Go to previous buffer
 Alt-l: Go to next buffer
+g+h/j/k/l: move to split buffer
 
 Search
 Ctrl-f: Fuzzy search in current buffer
