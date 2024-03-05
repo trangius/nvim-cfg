@@ -6,10 +6,10 @@ vim.o.expandtab = false
 vim.o.modeline = false
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
-vim.wo.number = true
+vim.o.number = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -41,3 +41,15 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+-- Relative line number
+vim.wo.relativenumber = true 
+
+-- Mark cursor line
+vim.wo.cursorline = true
+
+-- Ignore files in command line
+vim.o.wildignore = '*.o,*.rej,*.so'
+
+-- So status is not shown twice
+vim.o.showmode = false
