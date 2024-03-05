@@ -1,5 +1,7 @@
 ------- KEYBINDINGS -------
-Navigation in Code
+Navigation
+Ctrl-o: hop to
+
 gd: Go to definition
 gr: Go to references
 gi: Go to implementation
@@ -19,7 +21,7 @@ Ctrl-b: Find existing buffers
 :%s/search/replace/g: all in whole file
     -> using ctrl-r+" will paste current register
 
-Code navigation
+Aeral navigation
 Alt-a: Toggle navigation view
 Alt-j: Go to next navigation symbol
 Alt-k: Go to previous navigation symbol

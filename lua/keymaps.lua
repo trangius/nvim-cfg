@@ -29,7 +29,8 @@ vim.keymap.set("n", "H", "0", { noremap = true })
 vim.keymap.set("v", "H", "0", { noremap = true })
 vim.keymap.set("n", "L", "$", { noremap = true })
 vim.keymap.set("v", "L", "$", { noremap = true })
-
+-- use hop
+vim.api.nvim_set_keymap('n', '<C-o>', "<cmd>lua require'hop'.hint_char1()<cr>", {noremap = true, silent = true})
 
 --------------------------------------------------------------------------
 -- TAB INDENTATION...
@@ -108,6 +109,8 @@ vim.keymap.set('n', '<leader>,', function()
 		hidden = true, -- show hidden
 		respect_gitignore = false,})
 end, {desc = 'Browse files (show all)'})
+
+
 --------------------------------------------------------------------------
 -- CODE KEYMAPS (requires LSP, telescope)
 --------------------------------------------------------------------------
