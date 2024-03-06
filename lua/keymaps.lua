@@ -30,18 +30,18 @@ vim.keymap.set("v", "H", "0", { noremap = true })
 vim.keymap.set("n", "L", "$", { noremap = true })
 vim.keymap.set("v", "L", "$", { noremap = true })
 -- use hop
-vim.api.nvim_set_keymap('n', '<C-o>', "<cmd>lua require'hop'.hint_char1()<cr>", {noremap = true, silent = true})
+vim.keymap.set('n', '<C-o>', require'hop'.hint_char1, { noremap = true, silent = true, desc = 'Hop to char' })
 
 
 --------------------------------------------------------------------------
 -- TAB INDENTATION...
 --------------------------------------------------------------------------
-vim.api.nvim_set_keymap('v', '<Tab>', '>gv', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<S-Tab>', '<gv', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<lt>Tab>', '<gv', {noremap = true, silent = true})
+vim.keymap.set('v', '<Tab>', '>gv', { noremap = true, silent = true, desc = 'Indent and reselect in visual mode' })
+vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true, silent = true, desc = 'Unindent and reselect in visual mode' })
+vim.keymap.set('v', '<lt>Tab>', '<gv', { noremap = true, silent = true, desc = 'Alternative unindent and reselect in visual mode' })
 -- ...and make these behave
-vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
-vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
+vim.keymap.set('v', '<', '<gv', { noremap = true, silent = true, desc = 'Unindent and reselect in visual mode' })
+vim.keymap.set('v', '>', '>gv', { noremap = true, silent = true, desc = 'Indent and reselect in visual mode' })
 
 
 --------------------------------------------------------------------------
@@ -189,7 +189,7 @@ vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]]
 -- MISC FUNCTIONS (defined in functions.lua) KEYMAPS
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>n', functions.reload_lua_config, { noremap = true, silent = true, desc = 'reload [n]vim config' })
-vim.api.nvim_set_keymap('n', '<C-m>', ':lua require("functions").open_myhelp_popup()<CR>', {noremap = true, silent = true})
+vim.keymap.set('n', '<C-m>', require('functions').open_myhelp_popup, { noremap = true, silent = true, desc = 'Open MyHelp Popup' })
 vim.keymap.set('n', '<leader>t', require('functions').toggle_theme, { noremap = true, silent = true, desc = 'Toggle theme' })
 
 --------------------------------------------------------------------------
