@@ -190,7 +190,7 @@ vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]]
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>n', functions.reload_lua_config, { noremap = true, silent = true, desc = 'reload [n]vim config' })
 vim.api.nvim_set_keymap('n', '<C-m>', ':lua require("functions").open_myhelp_popup()<CR>', {noremap = true, silent = true})
-
+vim.keymap.set('n', '<leader>t', require('functions').toggle_theme, { noremap = true, silent = true, desc = 'Toggle theme' })
 
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS
