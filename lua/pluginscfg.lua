@@ -202,7 +202,7 @@ cmp.setup {
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = false,
 		},
-		['<Tab>'] = cmp.mapping(function(fallback)
+		['<A-Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			elseif luasnip.expand_or_locally_jumpable() then
@@ -211,7 +211,7 @@ cmp.setup {
 				fallback()
 			end
 		end, { 'i', 's' }),
-		['<S-Tab>'] = cmp.mapping(function(fallback)
+		['<A-S-Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
 			elseif luasnip.locally_jumpable(-1) then
