@@ -81,7 +81,7 @@ require('lazy').setup({
 		end
 	},
 
-	-- Spectre for search and replace, need riggrep and gnu-zed installed
+	-- Spectre for search and replace, need ripgrep and gnu-zed installed
 	{
 		'windwp/nvim-spectre',
 		requires = {
