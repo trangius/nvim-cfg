@@ -183,7 +183,7 @@ require('lazy').setup({
 		},
 	},
 
-	-- Github Copilot
+	-- Github Copilot, we need node.js for this -> "brew install node" 
     {
         "zbirenbaum/copilot.lua",
         event = "VimEnter",
