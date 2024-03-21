@@ -96,7 +96,7 @@ end
 
 
 function M.open_myhelp_popup()
-	local lines = M.load_lines_from_file(vim.fn.stdpath('config') .. '/README.md')
+	local lines = M.load_lines_from_file(vim.fn.stdpath('config') .. '/help')
     M.open_popup(lines, 0.6, 0.8)
 end
 
