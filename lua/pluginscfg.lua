@@ -67,8 +67,12 @@ end
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
+-- for csharp_ls to install, we need dotnet installed
 require('mason').setup()
-require('mason-lspconfig').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = { "lua_ls", "html", "csharp_ls" },
+    automatic_installation = true,
+})
 
 -- Enable the following language servers
 --	Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -84,7 +88,7 @@ local servers = {
 	-- pyright = {},
 	-- rust_analyzer = {},
 	-- tsserver = {}
-	-- csharp-language-server --how to get this to work, seems lue does not like -
+    csharp_ls = {},
 	html = { filetypes = { 'html', 'twig', 'hbs' } },
 	lua_ls = {
 		Lua = {
@@ -93,7 +97,9 @@ local servers = {
 		},
 	},
 }
-
+for server, config in pairs(servers) do
+    require('lspconfig')[server].setup(config)
+end
 -- Configure Treesitter
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
