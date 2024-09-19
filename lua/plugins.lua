@@ -224,6 +224,34 @@ require('lazy').setup({
 		build = ':TSUpdate',
 	},
 
+	-- {
+	-- 	"smoka7/multicursors.nvim",
+	-- 	event = "VeryLazy",
+	-- 	dependencies = {
+	-- 		'smoka7/hydra.nvim',
+	-- 	},
+	-- 	opts = {},
+	-- 	cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+	-- },
+	--
+	-- vim-visual-multi
+	-- {
+	-- 	"mg979/vim-visual-multi",
+	-- 	setup = function()
+	-- 		vim.g.VM_maps = {
+	-- 			["Find Under"] = "g*",
+	-- 			["Select Under"] = "g#",
+	-- 			["Select Till"] = "g,",
+	-- 			["Swap With Down"] = "<C-Down>",
+	-- 			["Swap With Up"] = "<C-Up>",
+	-- 			["Remove Under"] = "gX",
+	-- 			["Remove Selection Under"] = "gx",
+	-- 		}
+	-- 	end,
+	-- 	config = function()
+	-- 		vim.api.nvim_command("let g:vm_mouse = 1") -- Enable mouse support
+	-- 	end
+	-- },
 })
 
 

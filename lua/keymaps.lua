@@ -175,7 +175,6 @@ vim.keymap.set('n', '<A-j>', function() require('aerial').next() end, { desc = '
 vim.keymap.set('n', '<A-k>', function() require('aerial').prev() end, { desc = 'aerial previous' })
 
 
-
 --------------------------------------------------------------------------
 -- PERSISTENCE KEYMAPS
 --------------------------------------------------------------------------
@@ -185,6 +184,11 @@ vim.keymap.set("n", "<leader>pl", [[<cmd>lua require("persistence").load({ last 
 vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]], { desc = "Stop persistence" })
 
 
+--------------------------------------------------------------------------
+-- MULTI CURSOR KEYMAPS
+--------------------------------------------------------------------------
+-- vim.keymap.set('n', '<leader>m', ':MCstart<CR>', { noremap = true, silent = true, desc = '[m]ulti cursor' })
+-- vim.keymap.set('v', '<leader>m', ':MCstart<CR>', { noremap = true, silent = true, desc = '[m]ulti cursor' })
 --------------------------------------------------------------------------
 -- MISC FUNCTIONS (defined in functions.lua) KEYMAPS
 --------------------------------------------------------------------------
