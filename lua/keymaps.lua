@@ -17,7 +17,8 @@ vim.keymap.set("v", "<leader>d", '"_d', { noremap = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-
+-- remap ; to : in normal mode
+vim.keymap.set('n', ';', ':', { noremap = true })
 --------------------------------------------------------------------------
 -- TEXT NAVIGATION
 --------------------------------------------------------------------------
