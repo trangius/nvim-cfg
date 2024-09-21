@@ -88,8 +88,8 @@ vim.keymap.set('n', 'gl', '<C-w>l', {desc = 'Move to right split'})
 -- vim.keymap.set('n', '<A-C-l>', ':vertical resize +2<CR>', {desc = 'Increase width'})
 -- vim.keymap.set('n', '<A-C-j>', ':resize +2<CR>', {desc = 'Increase height'})
 -- vim.keymap.set('n', '<A-C-k>', ':resize -2<CR>', {desc = 'Decrease height'})
-vim.keymap.set('n', '<A-h>', ':bprevious<CR>', {noremap = true, silent = true})
-vim.keymap.set('n', '<A-l>', ':bnext<CR>', {noremap = true, silent = true})
+vim.keymap.set('n', '<C-h>', ':bprevious<CR>', {noremap = true, silent = true})
+vim.keymap.set('n', '<C-l>', ':bnext<CR>', {noremap = true, silent = true})
 
 
 --------------------------------------------------------------------------
