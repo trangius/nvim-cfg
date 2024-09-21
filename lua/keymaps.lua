@@ -6,12 +6,10 @@ local functions = require('functions')
 vim.keymap.set("x", "p", function() return 'pgv"' .. vim.v.register .. "y" end, { remap = false, expr = true })
 
 -- ..and dont yank on x
-vim.keymap.set("n", "x", '"_x', { noremap = true })
-vim.keymap.set("v", "x", '"_x', { noremap = true })
+vim.keymap.set({"n", "v"}, "x", '"_x', { noremap = true })
 
 -- don't yank on <leader>d
-vim.keymap.set("n", "<leader>d", '"_d', { noremap = true })
-vim.keymap.set("v", "<leader>d", '"_d', { noremap = true })
+vim.keymap.set({"n", "v"}, "<leader>d", '"_d', { noremap = true })
 
 -- remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -22,14 +20,10 @@ vim.keymap.set('n', ';', ':', { noremap = true })
 --------------------------------------------------------------------------
 -- TEXT NAVIGATION
 --------------------------------------------------------------------------
-vim.keymap.set("n", "J", "10j", { noremap = true })
-vim.keymap.set("v", "J", "10j", { noremap = true })
-vim.keymap.set("n", "K", "10k", { noremap = true })
-vim.keymap.set("v", "K", "10k", { noremap = true })
-vim.keymap.set("n", "H", "0", { noremap = true })
-vim.keymap.set("v", "H", "0", { noremap = true })
-vim.keymap.set("n", "L", "$", { noremap = true })
-vim.keymap.set("v", "L", "$", { noremap = true })
+vim.keymap.set({"n", "v"}, "J", "10j", { noremap = true })
+vim.keymap.set({"n", "v"}, "K", "10k", { noremap = true })
+vim.keymap.set({"n", "v", "o"}, "H", "^", { noremap = true })
+vim.keymap.set({"n", "v", "o"}, "L", "$", { noremap = true })
 -- use hop
 vim.keymap.set('n', '<C-o>', require'hop'.hint_char1, { noremap = true, silent = true, desc = 'Hop to char' })
 
