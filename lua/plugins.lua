@@ -224,6 +224,18 @@ require('lazy').setup({
 		build = ':TSUpdate',
 	},
 
+	{
+		'p00f/clangd_extensions.nvim',
+		config = function()
+			require("clangd_extensions").setup {
+				server = {
+					capabilities = capabilities,
+					on_attach = on_attach,
+				}
+			}
+		end,
+	},
+
 	-- {
 	-- 	"smoka7/multicursors.nvim",
 	-- 	event = "VeryLazy",

@@ -70,7 +70,7 @@ end
 -- for csharp_ls to install, we need dotnet installed
 require('mason').setup()
 require('mason-lspconfig').setup({
-    ensure_installed = { "lua_ls", "html", "csharp_ls" },
+    ensure_installed = { "lua_ls", "html", "csharp_ls", "clangd" },
     automatic_installation = true,
 })
 
@@ -83,7 +83,7 @@ require('mason-lspconfig').setup({
 --	If you want to override the default filetypes that your language server will attach to you can
 --	define the property 'filetypes' to the map in question.
 local servers = {
-	-- clangd = {},
+	 clangd = {},
 	-- gopls = {},
 	-- pyright = {},
 	-- rust_analyzer = {},
@@ -97,6 +97,8 @@ local servers = {
 		},
 	},
 }
+
+
 for server, config in pairs(servers) do
     require('lspconfig')[server].setup(config)
 end
@@ -227,12 +229,23 @@ cmp.setup {
 			end
 		end, { 'i', 's' }),
 
+        -- Ctrl-L for Copilot suggestion
+        ['<C-l>'] = cmp.mapping(function(fallback)
+            cmp.complete({
+                config = {
+                    sources = {
+                        { name = 'copilot' }
+                    }
+                }
+            })
+        end, { 'i', 's' }),
+
 	},
 	sources = {
-		{ name = "copilot", group_index = 1 },
-		{ name = "nvim_lsp", group_index = 2 },
+		{ name = "nvim_lsp", group_index = 1 },
 		{ name = "path", group_index = 2 },
 		{ name = "luasnip", group_index = 2 },
+		{ name = "copilot", group_index = 3 },
 	},
 }
 
