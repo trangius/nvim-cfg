@@ -169,9 +169,9 @@ vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = '[l]ist' }
 --vim.keymap.set('n', '<leader>a', function() require('aerial').toggle() end, { desc = '[a]erial toggle (alt-a)' })
 --vim.keymap.set('n', '<leader>j', function() require('aerial').next() end, { desc = '[a]erial [n]ext (alt-k)' })
 --vim.keymap.set('n', '<leader>k', function() require('aerial').prev() end, { desc = '[a]erial [p]revious (alt-j)' })
-vim.keymap.set('n', '<A-a>', function() require('aerial').toggle() end, { desc = 'aerial toggle' })
-vim.keymap.set('n', '<A-j>', function() require('aerial').next() end, { desc = 'aerial next' })
-vim.keymap.set('n', '<A-k>', function() require('aerial').prev() end, { desc = 'aerial previous' })
+vim.keymap.set('n', '<C-a>', function() require('aerial').toggle() end, { desc = 'aerial toggle' })
+vim.keymap.set('n', '<C-j>', function() require('aerial').next() end, { desc = 'aerial next' })
+vim.keymap.set('n', '<C-k>', function() require('aerial').prev() end, { desc = 'aerial previous' })
 
 
 --------------------------------------------------------------------------
