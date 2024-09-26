@@ -154,6 +154,7 @@ vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = '[n]ext mes
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = '[f]loating diagnostic message' })
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = '[l]ist' })
 
+vim.keymap.set('n', '<leader>rs', vim.lsp.buf.rename, { desc = '[r]ename [s]ymbol' })
 -- workspace stuff, would we ever care about this?
 --vim.keymap.set('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'symbols' })
 --vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'add folder' })
