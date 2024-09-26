@@ -192,7 +192,7 @@ vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]]
 -- MISC FUNCTIONS (defined in functions.lua) KEYMAPS
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>n', functions.reload_lua_config, { noremap = true, silent = true, desc = 'reload [n]vim config' })
-vim.keymap.set('n', '<C-m>', require('functions').open_myhelp_popup, { noremap = true, silent = true, desc = 'Open MyHelp Popup' })
+vim.keymap.set('n', '<leader>h', require('functions').open_myhelp_popup, { noremap = true, silent = true, desc = 'Help/Tips' })
 vim.keymap.set('n', '<leader>t', require('functions').toggle_theme, { noremap = true, silent = true, desc = 'Toggle theme' })
 
 --------------------------------------------------------------------------
