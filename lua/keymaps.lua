@@ -108,8 +108,8 @@ vim.keymap.set('n', '<leader>,', function()
   require('telescope').extensions.file_browser.file_browser({
     hidden = true,
     respect_gitignore = false,
-    use_fd = false,  -- Använd 'find' istället för 'fd'
-    cwd = '.',       -- Sätt nuvarande katalog
+    use_fd = false,  -- Use 'find' instead of 'fd'
+    cwd = '.',       -- Set current directory
     find_command = { 'find', '.', '-type', 'f', '-or', '-type', 'l', '-print' },
   })
 end)
@@ -123,7 +123,7 @@ vim.keymap.set('n', '<leader>cr', require('telescope.builtin').lsp_references, {
 vim.keymap.set('n', '<leader>ci', require('telescope.builtin').lsp_implementations, { desc = 'goto [i]mplementation (gi)' })
 vim.keymap.set('n', '<leader>ch', vim.lsp.buf.hover, { desc = '[h]over documentation (gh)' })
 vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help, { desc = '[s]ignature documentation (gk)' })
--- non leader ones... do we need these?
+-- non leader ones...
 vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'goto definition' })
 vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'goto references' })
 vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'goto Implementation' })

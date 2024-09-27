@@ -107,7 +107,7 @@ function M.toggle_theme()
         vim.opt.background = "dark"
         vim.g.current_theme = "warm"
     else
-        -- Sätt till "light" tema
+        -- Set light theme
         require("onedark").setup({
           style = "light"
         })
