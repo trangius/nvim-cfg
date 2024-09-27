@@ -81,16 +81,6 @@ require('lazy').setup({
 		end
 	},
 
-	-- Spectre for search and replace, need ripgrep and gnu-zed installed
-	{
-		'windwp/nvim-spectre',
-		requires = {
-			'nvim-lua/plenary.nvim',
-			'BurntSushi/ripgrep' -- 
-		},
-		config = function() require('spectre').setup() end
-	},
-
 
 	---------------------------------------------------------------
 	-- GIT PLUGINS

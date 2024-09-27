@@ -50,7 +50,6 @@ local normal_mappings = {
 	['<leader>d'] = { name = '[d]iagnostics', _ = 'which_key_ignore' },
 	['<leader>f'] = { name = '[f]ind', _ = 'which_key_ignore' },
 	['<leader>p'] = { name = '[p]ersistence', _ = 'which_key_ignore' },
-	['<leader>r'] = { name = 'search & [r]eplace', _ = 'which_key_ignore' },
 --	['<leader>w'] = { name = '[w]orkspace', _ = 'which_key_ignore' },
 }
 
@@ -59,7 +58,7 @@ require('which-key').register(normal_mappings, { mode = "n" })
 
 -- Genvägar endast för visuellt läge
 local visual_mappings = {
-	['<leader>r'] = { name = 'search & [r]eplace', _ = 'which_key_ignore' },
+--	['<leader>r'] = { name = 'search & [r]eplace', _ = 'which_key_ignore' },
 }
 
 -- Registrera för visuellt läge
@@ -121,17 +120,6 @@ vim.keymap.set('n', '<leader>,', function()
     find_command = { 'find', '.', '-type', 'f', '-or', '-type', 'l', '-print' },
   })
 end)
-
-
---------------------------------------------------------------------------
--- Spectre search/replace
---------------------------------------------------------------------------
-vim.keymap.set('n', '<leader>rr', require('spectre').toggle, { desc = 'toggle spect[r]e' })
-vim.keymap.set('n', '<C-p>', require('spectre').toggle, { desc = 'toggle spect[r]e' })
-vim.keymap.set('n', '<leader>rw', function() require('spectre').open_visual({select_word=true}) end, { desc = "Replace current [w]ord" })
-vim.keymap.set('n', '<leader>rf', function() require('spectre').open_file_search({select_word=true}) end, { desc = "Replace in current [f]ile" })
-vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {desc = "Search current word"})
-vim.keymap.set('v', '<C-p>', '<esc><cmd>lua require("spectre").open_visual()<CR>', {desc = "Search current word"})
 
 
 --------------------------------------------------------------------------
