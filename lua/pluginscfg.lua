@@ -254,3 +254,17 @@ require("copilot").setup({
   suggestion = { enabled = false },
   panel = { enabled = false },
 })
+
+-- Configure comment
+require('Comment').setup({
+    mappings = {
+        basic = true,  -- Keep basic mappings like `gcc`
+        extra = true,  -- Keep extra mappings like `gcA`, `gcO`, etc.
+    }
+})
+
+-- Remove only `gc` (linewise comment toggle) to not get conflicts
+vim.keymap.del('n', 'gc')
+vim.keymap.del('x', 'gc')
+vim.keymap.del('n', 'gb')
+vim.keymap.del('x', 'gb')
