@@ -8,8 +8,9 @@ vim.keymap.set("x", "p", function() return 'pgv"' .. vim.v.register .. "y" end, 
 -- ..and dont yank on x
 vim.keymap.set({"n", "v"}, "x", '"_x', { noremap = true })
 
--- don't yank on <leader>d
-vim.keymap.set({"n", "v"}, "<leader>d", '"_d', { noremap = true })
+-- don't yank on <C-d>/<C-dd>
+vim.keymap.set({"v"}, "<C-d>", '"_d', { noremap = true })
+vim.keymap.set("n", "<C-d><C-d>", '"_dd', { noremap = true })
 
 -- remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
