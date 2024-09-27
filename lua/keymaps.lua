@@ -43,19 +43,20 @@ vim.keymap.set('v', '>', '>gv', { noremap = true, silent = true, desc = 'Indent 
 --------------------------------------------------------------------------
 -- WHICH-KEY SETTINGS (FANCY HELPER FOR <LEADER>)
 --------------------------------------------------------------------------
--- Genvägar tillgängliga i normalt läge
 local normal_mappings = {
---	['<leader>a'] = { name = '[a]eral', _ = 'which_key_ignore' },
-	['<leader>b'] = { name = '[b]buffer', _ = 'which_key_ignore' },
-	['<leader>c'] = { name = '[c]ode', _ = 'which_key_ignore' },
-	['<leader>d'] = { name = '[d]iagnostics', _ = 'which_key_ignore' },
-	['<leader>f'] = { name = '[f]ind', _ = 'which_key_ignore' },
-	['<leader>p'] = { name = '[p]ersistence', _ = 'which_key_ignore' },
---	['<leader>w'] = { name = '[w]orkspace', _ = 'which_key_ignore' },
-}
+    { "<leader>b", group = "[b]buffer" },
+    { "<leader>b_", hidden = true },
+    { "<leader>c", group = "[c]ode" },
+    { "<leader>c_", hidden = true },
+    { "<leader>d", group = "[d]iagnostics" },
+    { "<leader>d_", hidden = true },
+    { "<leader>f", group = "[f]ind" },
+    { "<leader>f_", hidden = true },
+    { "<leader>p", group = "[p]ersistence" },
+    { "<leader>p_", hidden = true },
+  }
 
--- Registrera för normalt läge
-require('which-key').register(normal_mappings, { mode = "n" })
+require('which-key').add(normal_mappings, { mode = "n" })
 
 --------------------------------------------------------------------------
 -- BUFFER KEYMAPS
