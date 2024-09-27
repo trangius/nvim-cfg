@@ -57,15 +57,6 @@ local normal_mappings = {
 -- Registrera för normalt läge
 require('which-key').register(normal_mappings, { mode = "n" })
 
--- Genvägar endast för visuellt läge
-local visual_mappings = {
---	['<leader>r'] = { name = 'search & [r]eplace', _ = 'which_key_ignore' },
-}
-
--- Registrera för visuellt läge
-require('which-key').register(visual_mappings, { mode = "v" })
-
-
 --------------------------------------------------------------------------
 -- BUFFER KEYMAPS
 --------------------------------------------------------------------------
