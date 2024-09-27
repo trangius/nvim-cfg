@@ -32,10 +32,10 @@ vim.keymap.set('n', '<C-o>', require'hop'.hint_char1, { noremap = true, silent =
 --------------------------------------------------------------------------
 -- TAB INDENTATION...
 --------------------------------------------------------------------------
+-- indent with tab
 vim.keymap.set('v', '<Tab>', '>gv', { noremap = true, silent = true, desc = 'Indent and reselect in visual mode' })
 vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true, silent = true, desc = 'Unindent and reselect in visual mode' })
-vim.keymap.set('v', '<lt>Tab>', '<gv', { noremap = true, silent = true, desc = 'Alternative unindent and reselect in visual mode' })
--- ...and make these behave
+-- make these behave
 vim.keymap.set('v', '<', '<gv', { noremap = true, silent = true, desc = 'Unindent and reselect in visual mode' })
 vim.keymap.set('v', '>', '>gv', { noremap = true, silent = true, desc = 'Indent and reselect in visual mode' })
 
