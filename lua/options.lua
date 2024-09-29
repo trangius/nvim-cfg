@@ -53,3 +53,15 @@ vim.o.wildignore = '*.o,*.rej,*.so'
 
 -- So status is not shown twice
 vim.o.showmode = false
+
+
+-- Automatically check if a file has changed outside of Neovim and reload it
+vim.o.autoread = true
+
+vim.cmd([[
+  autocmd FocusGained,BufEnter,CursorHold * checktime
+]])
+
+vim.cmd([[
+  autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+]])
