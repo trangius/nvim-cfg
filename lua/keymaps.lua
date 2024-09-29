@@ -145,10 +145,10 @@ vim.keymap.set('n', '<leader>ct', ':retab!<CR>', { desc = ':re[t]ab!' })
 -- Keymap to show invisible characters (like tabs and trailing spaces)
 vim.keymap.set('n', '<leader>cc', function()
   if vim.opt.list:get() then
-    vim.opt.list = false   -- Om 'list' är satt, stäng av den
+    vim.opt.list = false
   else
-    vim.opt.list = true    -- Om 'list' inte är satt, slå på den
-    vim.opt.listchars = { tab = '»-', trail = '·' } -- Sätt listchars när den aktiveras
+    vim.opt.list = true
+    vim.opt.listchars = { tab = '»-', trail = '·' }
   end
 end, { desc = 'Toggle invisible [c]haracters' })
 
