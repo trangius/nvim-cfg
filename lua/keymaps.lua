@@ -54,6 +54,8 @@ local normal_mappings = {
     { "<leader>f_", hidden = true },
     { "<leader>p", group = "[p]ersistence" },
     { "<leader>p_", hidden = true },
+    { "<leader>r", group = "[r]ename" },
+    { "<leader>r_", hidden = true },
   }
 
 require('which-key').add(normal_mappings, { mode = "n" })
@@ -136,6 +138,20 @@ vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = '[f]loatin
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = '[l]ist' })
 
 vim.keymap.set('n', '<leader>rs', vim.lsp.buf.rename, { desc = '[r]ename [s]ymbol' })
+
+-- Keymap to run :retab!
+vim.keymap.set('n', '<leader>ct', ':retab!<CR>', { desc = ':re[t]ab!' })
+
+-- Keymap to show invisible characters (like tabs and trailing spaces)
+vim.keymap.set('n', '<leader>cc', function()
+  if vim.opt.list:get() then
+    vim.opt.list = false   -- Om 'list' är satt, stäng av den
+  else
+    vim.opt.list = true    -- Om 'list' inte är satt, slå på den
+    vim.opt.listchars = { tab = '»-', trail = '·' } -- Sätt listchars när den aktiveras
+  end
+end, { desc = 'Toggle invisible [c]haracters' })
+
 -- workspace stuff, would we ever care about this?
 --vim.keymap.set('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'symbols' })
 --vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'add folder' })
