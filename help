@@ -25,6 +25,7 @@ Ctrl-b:     Find existing buffers
 Ctrl-p:     Search/replace with Spectre
 
 :%s/foo/bar/g: replace all in whole file
+:%s/foo/bar/gc: replace all with confirmation.
 -> using ctrl-r+" will paste current register
 
 ---- Macros ----
