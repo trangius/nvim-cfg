@@ -20,9 +20,9 @@ function M.open_popup(lines, width_pct, height_pct, opts)
     opts = opts or {}
     local terminal = opts.terminal or false
     local cwd = opts.cwd or vim.loop.cwd()
-    local buf = vim.api.nvim_create_buf(false, true) -- skapa nytt buffert
+    local buf = vim.api.nvim_create_buf(false, true) -- create new buffer
 
-    -- beräkna storlek
+    -- calculate size
     local width = vim.api.nvim_get_option("columns")
     local height = vim.api.nvim_get_option("lines")
     local win_width = math.ceil(width * width_pct)
@@ -30,7 +30,7 @@ function M.open_popup(lines, width_pct, height_pct, opts)
     local win_row = math.ceil((height - win_height) / 2)
     local win_col = math.ceil((width - win_width) / 2)
 
-    -- skapa en fin ram runt popupen
+    -- create a nice frame around the popup
     local border_buf = vim.api.nvim_create_buf(false, true)
     local border_opts = {
         style = "minimal",
@@ -48,7 +48,7 @@ function M.open_popup(lines, width_pct, height_pct, opts)
     vim.api.nvim_buf_set_lines(border_buf, 0, -1, false, border_lines)
     local border_win = vim.api.nvim_open_win(border_buf, false, border_opts)
 
-    -- konfigurera popup-fönstret
+    -- configure the popup window
     local win_opts = {
         style = "minimal",
         relative = "editor",
@@ -61,30 +61,30 @@ function M.open_popup(lines, width_pct, height_pct, opts)
     vim.api.nvim_win_set_option(win, 'cursorline', true)
 
     if terminal then
-        -- Öppna terminal i bufferten med on_exit callback
+        -- Open terminal in the buffer with on_exit callback
         vim.fn.termopen(vim.o.shell, {
             cwd = cwd,
             on_exit = function(_, _)
-                -- Använd vim.schedule för att undvika problem med callback-konteksten
+                -- Use vim.schedule to avoid issues with callback context
                 vim.schedule(function()
                     M.close_popup(win, border_win)
                 end)
             end
         })
         vim.api.nvim_buf_set_option(buf, 'buflisted', false)
-        -- Starta i insert-läge
+        -- Start in insert mode
         vim.cmd('startinsert')
-        -- Stäng popup med <C-q> i terminal-läge
+        -- Close popup with <C-q> in terminal mode
         local close_cmd = string.format(":lua require'functions'.close_popup(%d, %d)<CR>", win, border_win)
         vim.api.nvim_buf_set_keymap(buf, 't', '<C-q>', [[<C-\><C-n>]] .. close_cmd, {noremap = true, silent = true})
     else
-        -- Ställ in bufferval för vanlig popup
+        -- Set buffer options for regular popup
         vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
         vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
         vim.api.nvim_buf_set_option(buf, 'swapfile', false)
-        -- sätt de fördefinierade raderna
+        -- set the predefined lines
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-        -- stäng popup med ESC eller Enter i normal-läge
+        -- close popup with ESC or Enter in normal mode
         local close_cmd = string.format(":lua require'functions'.close_popup(%d, %d)<CR>", win, border_win)
         vim.api.nvim_buf_set_keymap(buf, 'n', '<ESC>', close_cmd, {noremap = true, silent = true})
         vim.api.nvim_buf_set_keymap(buf, 'n', '<CR>', close_cmd, {noremap = true, silent = true})
@@ -111,7 +111,7 @@ function M.load_lines_from_file(filepath)
         end
         file:close()
     else
-        error("Kan inte öppna fil: " .. filepath)
+        error("Cannot open file" .. filepath)
     end
     return lines
 end
