@@ -121,22 +121,6 @@ function M.open_myhelp_popup()
     M.open_popup(lines, 0.6, 0.8)
 end
 
-function M.toggle_theme()
-    if vim.g.current_theme == "light" then
-        require("onedark").setup({style = "warm"})
-        require("onedark").load()
-        vim.opt.background = "dark"
-        vim.g.current_theme = "warm"
-    else
-        -- Sätt ljus tema
-        require("onedark").setup({
-          style = "light"
-        })
-        vim.opt.background = "light"
-        vim.g.current_theme = "light"
-    end
-end
-
 function M.terminal_here()
     local current_file = vim.api.nvim_buf_get_name(0)
     local dir = vim.fn.fnamemodify(current_file, ':p:h')
