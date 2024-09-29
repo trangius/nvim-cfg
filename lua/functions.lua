@@ -1,19 +1,19 @@
 local M = {}
 
 function M.reload_lua_config()
-  for name, _ in pairs(package.loaded) do
-    if name:match("^c") and not name:match("^core") then
-      package.loaded[name] = nil
-    end
-  end
-  dofile(vim.env.MYVIMRC)
+	for name, _ in pairs(package.loaded) do
+		if name:match("^c") and not name:match("^core") then
+			package.loaded[name] = nil
+		end
+	end
+	dofile(vim.env.MYVIMRC)
 end
 
 function M.search_in_current_buffer()
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
+	require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+		winblend = 10,
+		previewer = false,
+	})
 end
 
 function M.open_popup(lines, width_pct, height_pct, opts)
