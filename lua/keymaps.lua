@@ -73,10 +73,10 @@ vim.keymap.set('n', 'gh', '<C-w>h', {desc = 'Move to left split'})
 vim.keymap.set('n', 'gj', '<C-w>j', {desc = 'Move to lower split'})
 vim.keymap.set('n', 'gk', '<C-w>k', {desc = 'Move to upper split'})
 vim.keymap.set('n', 'gl', '<C-w>l', {desc = 'Move to right split'})
--- vim.keymap.set('n', '<A-C-h>', ':vertical resize -2<CR>', {desc = 'Decrease width'})
--- vim.keymap.set('n', '<A-C-l>', ':vertical resize +2<CR>', {desc = 'Increase width'})
--- vim.keymap.set('n', '<A-C-j>', ':resize +2<CR>', {desc = 'Increase height'})
--- vim.keymap.set('n', '<A-C-k>', ':resize -2<CR>', {desc = 'Decrease height'})
+vim.keymap.set('n', '<A-C-h>', ':vertical resize -2<CR>', {desc = 'Decrease width'})
+vim.keymap.set('n', '<A-C-l>', ':vertical resize +2<CR>', {desc = 'Increase width'})
+vim.keymap.set('n', '<A-C-j>', ':resize +2<CR>', {desc = 'Increase height'})
+vim.keymap.set('n', '<A-C-k>', ':resize -2<CR>', {desc = 'Decrease height'})
 vim.keymap.set('n', '<C-h>', ':bprevious<CR>', {noremap = true, silent = true})
 vim.keymap.set('n', '<C-l>', ':bnext<CR>', {noremap = true, silent = true})
 
@@ -185,6 +185,7 @@ vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]]
 vim.keymap.set('n', '<leader>n', functions.reload_lua_config, { noremap = true, silent = true, desc = 'Reload nvim config' })
 vim.keymap.set('n', '<leader>h', require('functions').open_myhelp_popup, { noremap = true, silent = true, desc = 'Help/Tips' })
 vim.keymap.set('n', '<leader>t', require('functions').terminal_here, { noremap = true, silent = true, desc = 'Terminal here' })
+vim.keymap.set('t', '<C-q>', require('functions').terminal_close, { noremap = true, silent = true, desc = 'Close terminal split' })
 
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS
