@@ -106,6 +106,14 @@ function M.terminal_close()
 	vim.api.nvim_command('stopinsert')
 	vim.api.nvim_command('q')
 end
+
+function M.toggle_chars()
+  if vim.opt.list:get() then
+    vim.opt.list = false
+  else
+    vim.opt.list = true
+    vim.opt.listchars = { tab = '»-', trail = '·' }
+  end
 end
 
 return M

@@ -144,14 +144,7 @@ vim.keymap.set('n', '<leader>cn', vim.lsp.buf.rename, { desc = 'Rename symbol' }
 vim.keymap.set('n', '<leader>ct', ':retab!<CR>', { desc = ':retab!' })
 
 -- Keymap to show invisible characters (like tabs and trailing spaces)
-vim.keymap.set('n', '<leader>cc', function()
-  if vim.opt.list:get() then
-    vim.opt.list = false
-  else
-    vim.opt.list = true
-    vim.opt.listchars = { tab = '»-', trail = '·' }
-  end
-end, { desc = 'Toggle invisible characters' })
+vim.keymap.set('n', '<leader>cc', require('functions').toggle_chars, { desc = 'Toggle invisible characters' })
 
 -- workspace stuff, would we ever care about this?
 --vim.keymap.set('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'Symbols' })
