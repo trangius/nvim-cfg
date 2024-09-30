@@ -18,6 +18,8 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 -- remap ; to : in normal mode
 vim.keymap.set('n', ';', ':', { noremap = true })
+
+
 --------------------------------------------------------------------------
 -- TEXT NAVIGATION
 --------------------------------------------------------------------------
@@ -54,9 +56,8 @@ local normal_mappings = {
     { "<leader>f_", hidden = true },
     { "<leader>p", group = "Persistence" },
     { "<leader>p_", hidden = true },
-    { "<leader>r", group = "Rename" },
-    { "<leader>r_", hidden = true },
   }
+
 
 require('which-key').add(normal_mappings, { mode = "n" })
 
@@ -137,7 +138,7 @@ vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = 'Next messa
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = 'Floating diagnostic message' })
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = 'List' })
 
-vim.keymap.set('n', '<leader>rs', vim.lsp.buf.rename, { desc = 'Rename symbol' })
+vim.keymap.set('n', '<leader>cn', vim.lsp.buf.rename, { desc = 'Rename symbol' })
 
 -- Keymap to run :retab!
 vim.keymap.set('n', '<leader>ct', ':retab!<CR>', { desc = ':retab!' })
@@ -178,11 +179,6 @@ vim.keymap.set("n", "<leader>pl", [[<cmd>lua require("persistence").load({ last 
 vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]], { desc = "Stop persistence" })
 
 
---------------------------------------------------------------------------
--- MULTI CURSOR KEYMAPS
---------------------------------------------------------------------------
--- vim.keymap.set('n', '<leader>m', ':MCstart<CR>', { noremap = true, silent = true, desc = 'Multi cursor' })
--- vim.keymap.set('v', '<leader>m', ':MCstart<CR>', { noremap = true, silent = true, desc = 'Multi cursor' })
 --------------------------------------------------------------------------
 -- MISC FUNCTIONS (defined in functions.lua) KEYMAPS
 --------------------------------------------------------------------------
