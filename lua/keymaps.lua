@@ -158,9 +158,9 @@ vim.keymap.set('n', '<leader>cc', require('functions').toggle_chars, { desc = 'T
 --------------------------------------------------------------------------
 -- AERIAL KEYMAPS
 --------------------------------------------------------------------------
-vim.keymap.set('n', '<C-a>', function() require('aerial').toggle() end, { desc = 'Aerial toggle' })
-vim.keymap.set('n', '<C-j>', function() require('aerial').next() end, { desc = 'Aerial next' })
-vim.keymap.set('n', '<C-k>', function() require('aerial').prev() end, { desc = 'Aerial previous' })
+vim.keymap.set({'n', 'v', 'i'}, '<C-a>', function() require('aerial').toggle() end, { desc = 'Aerial toggle' })
+vim.keymap.set({'n', 'v', 'i'}, '<C-j>', function() require('aerial').next() end, { desc = 'Aerial next' })
+vim.keymap.set({'n', 'v', 'i'}, '<C-k>', function() require('aerial').prev() end, { desc = 'Aerial previous' })
 
 
 --------------------------------------------------------------------------
