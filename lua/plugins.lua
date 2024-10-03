@@ -19,6 +19,7 @@ require('lazy').setup({
 		"stevearc/aerial.nvim",
 		config = function()
 			require('aerial').setup({})
+			require('aerial').open()
 		end
 	},
 
