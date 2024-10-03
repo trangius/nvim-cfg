@@ -19,7 +19,7 @@ require('lazy').setup({
 		"stevearc/aerial.nvim",
 		config = function()
 			require('aerial').setup({})
-			require('aerial').open()
+			-- require('aerial').open() --TODO: this one breaks tabstop and sets it to 8 always. can this be fixed?
 		end
 	},
 
