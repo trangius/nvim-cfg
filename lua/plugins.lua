@@ -255,4 +255,34 @@ require('lazy').setup({
 	-- 		vim.api.nvim_command("let g:vm_mouse = 1") -- Enable mouse support
 	-- 	end
 	-- },
+	--
+	--
+	--
+	{
+	  "mfussenegger/nvim-dap",  -- Core DAP plugin
+	  dependencies = {
+		{
+		  "rcarriga/nvim-dap-ui",  -- DAP UI plugin
+		  dependencies = {
+			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio",  -- Additional dependency for nvim-dap-ui
+		  },
+		  config = function()
+			require("dapui").setup()  -- Setup DAP UI
+		  end,
+		},
+		{
+		  "Weissle/persistent-breakpoints.nvim",  -- Persistent breakpoints plugin
+		  config = function()
+			require("persistent-breakpoints").setup{
+			  load_breakpoints_event = { "BufReadPost" },  -- Load breakpoints when opening files
+			}
+		  end,
+		},
+	  },
+	  config = function()
+		-- Any additional configuration for nvim-dap can be added here
+	  end,
+	}
+
 })

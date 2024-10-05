@@ -50,7 +50,9 @@ local normal_mappings = {
     { "<leader>b_", hidden = true },
     { "<leader>c", group = "Code" },
     { "<leader>c_", hidden = true },
-    { "<leader>d", group = "Diagnostics" },
+    { "<leader>g", group = "Diagnostics" },
+    { "<leader>g_", hidden = true },
+    { "<leader>d", group = "Debug" },
     { "<leader>d_", hidden = true },
     { "<leader>f", group = "Find" },
     { "<leader>f_", hidden = true },
@@ -135,10 +137,10 @@ vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations, { de
 vim.keymap.set('n', 'go', vim.lsp.buf.hover, { desc = 'Hover documentation' })
 vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, { desc = 'Signature documentation' })
 -- diagnostic keymaps
-vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, { desc = 'Previous message' })
-vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = 'Next message' })
-vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = 'Floating diagnostic message' })
-vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = 'List' })
+vim.keymap.set('n', '<leader>gp', vim.diagnostic.goto_prev, { desc = 'Previous message' })
+vim.keymap.set('n', '<leader>gn', vim.diagnostic.goto_next, { desc = 'Next message' })
+vim.keymap.set('n', '<leader>gf', vim.diagnostic.open_float, { desc = 'Floating diagnostic message' })
+vim.keymap.set('n', '<leader>gl', vim.diagnostic.setloclist, { desc = 'List' })
 
 vim.keymap.set('n', '<leader>cn', vim.lsp.buf.rename, { desc = 'Rename symbol' })
 
@@ -155,6 +157,53 @@ vim.keymap.set('n', '<leader>cc', require('functions').toggle_chars, { desc = 'T
 --vim.keymap.set('n', '<leader>wl', function()
 --	print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 --end, { desc = 'List folders' })
+
+--------------------------------------------------------------------------
+-- DEBUGGER KEYMAPS (requires dap)
+--------------------------------------------------------------------------
+local dap = require('dap')
+vim.keymap.set("n", "<leader>db", ":PBToggleBreakpoint<CR>", { noremap = true, silent = true, desc = "Toggle a breakpoint" })
+vim.keymap.set("n", "<leader>dB", ":PBSetConditionalBreakpoint<CR>", { noremap = true, silent = true, desc = "Conditional brealpoint" })
+vim.keymap.set('n', '<leader>dr', dap.continue, { noremap = true, silent = true, desc = 'Run/Continue debugging (C-c)' })
+vim.keymap.set('n', '<leader>do', dap.step_over, { noremap = true, silent = true, desc = 'Step over (C-o)' })
+vim.keymap.set('n', '<leader>di', dap.step_into, { noremap = true, silent = true, desc = 'Step into (C-i)' })
+vim.keymap.set('n', '<leader>du', dap.step_out, { noremap = true, silent = true, desc = 'Step out (C-u)' })
+
+-- Create a keymap to disconnect debugger and close DAP UI
+vim.keymap.set('n', '<leader>dq (C-q)', function()
+  require('dap').terminate()  -- Terminate the debugging session
+  require('dapui').close()    -- Close the DAP UI
+end, { noremap = true, silent = true, desc = 'Quit debugger' })
+
+
+-- Function to check if the debugger is active
+local function is_debugging()
+  return dap.session() ~= nil  -- Returns true if a debugging session is active
+end
+
+-- Create a conditional keymap function
+local function conditional_keymap(mode, key, command, options)
+  options = options or { noremap = true, silent = true }
+  
+  -- Wrap the command with a check for active debugging
+  vim.keymap.set(mode, key, function()
+    if is_debugging() then
+      command()  -- Execute the command if debugging is active
+    else
+      print("Debugger is not running")  -- Optionally notify if not debugging
+    end
+  end, options)
+end
+
+-- Example: Set keymaps that only work when the debugger is active
+conditional_keymap('n', '<C-c>', dap.continue, { desc = 'Continue debugging' })
+conditional_keymap('n', '<C-o>', dap.step_over, { desc = 'Step over' })
+conditional_keymap('n', '<C-i>', dap.step_into, { desc = 'Step into' })
+conditional_keymap('n', '<C-u>', dap.step_out, { desc = 'Step out' })
+conditional_keymap('n', '<C-q>', function()
+  dap.terminate()
+  require('dapui').close()
+end, { desc = 'Quit debugger' })
 
 
 --------------------------------------------------------------------------

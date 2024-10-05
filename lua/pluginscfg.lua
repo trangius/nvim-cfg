@@ -254,3 +254,123 @@ require("copilot").setup({
 	suggestion = { enabled = false },
 	panel = { enabled = false },
 })
+
+-- nvim-dap configuration
+local dap = require('dap')
+
+-- Configure dap for C/C++ debugging with clang using lldb
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/opt/homebrew/opt/llvm/bin/lldb-dap', -- use lldb-dap, needs to be installed
+  name = 'lldb'
+}
+
+dap.configurations.cpp = {
+  {
+    name = "Launch",
+    type = "lldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+    runInTerminal = true, -- Kör i terminal för att kunna se utdata
+  },
+}
+
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.objcpp = dap.configurations.cpp
+dap.configurations.swift = dap.configurations.cpp
+
+-- Add mappings for debugging
+vim.cmd('highlight DapBreakpointColor guifg=#ff5555')  -- Definiera färg (röd i detta exempel)
+vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpointColor', linehl = '', numhl = '' })
+
+-- nvim-dap-ui configuration
+local dapui = require("dapui")
+
+dapui.setup({
+  icons = { expanded = "▾", collapsed = "▸" },  -- Icons for tree structure
+  mappings = {
+    -- Navigation keys in DAP UI
+    expand = { "<CR>", "<2-LeftMouse>" },
+    open = "o",
+    remove = "d",
+    edit = "e",
+    repl = "r",
+    toggle = "t",
+  },
+  -- Layouts and sizes for DAP UI windows
+  layouts = {
+    {
+      elements = {
+        { id = "breakpoints", size = 0.5 }, -- Breakpoints section, smaller
+        { id = "stacks", size = 0.20 },      -- Call stacks section, moderate
+        { id = "scopes", size = 0.15 },      -- Scope section, smaller
+        { id = "watches", size = 0.15 },     -- Watches section, larger
+      },
+      size = 40,  -- Width or height of the panel depending on position
+      position = "left",  -- Panel position ("left", "right", "top", "bottom")
+    },
+    {
+      elements = {
+        { id = "repl", size = 0.5 },  -- Repl section
+        { id = "console", size = 0.5 },  -- Debugger console
+      },
+      size = 14,  -- Height or width depending on position
+      position = "bottom",  -- Position for REPL and console panels
+    },
+  },
+  floating = {
+    max_height = nil,  -- Maximum height for floating windows
+    max_width = nil,  -- Maximum width for floating windows
+    border = "single",  -- Border style for floating windows
+    mappings = {
+      close = { "q", "<Esc>" },  -- Keys to close floating windows
+    },
+  },
+  windows = { indent = 1 },  -- Indentation for windows in DAP UI
+  render = {
+    max_type_length = nil,  -- Maximum type length in variable list
+  }
+})
+
+-- Automatically open and close DAP UI on debugging events
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dapui.close()
+end
+
+-- Customize colors for nvim-dap-ui to fit OneDark theme using vim.api.nvim_set_hl
+vim.api.nvim_set_hl(0, "DapUIVariable", { fg = "#E5C07B" })          -- For variables (yellow)
+vim.api.nvim_set_hl(0, "DapUIScope", { fg = "#61AFEF" })             -- For scope (blue)
+vim.api.nvim_set_hl(0, "DapUIType", { fg = "#C678DD" })              -- For data types (purple)
+vim.api.nvim_set_hl(0, "DapUIValue", { fg = "#98C379" })             -- For values (green)
+vim.api.nvim_set_hl(0, "DapUIModifiedValue", { fg = "#E06C75", bold = true })  -- For modified values (red)
+vim.api.nvim_set_hl(0, "DapUIDecoration", { fg = "#56B6C2" })        -- For decorations (cyan)
+vim.api.nvim_set_hl(0, "DapUIThread", { fg = "#61AFEF" })            -- For threads (blue)
+vim.api.nvim_set_hl(0, "DapUIStoppedThread", { fg = "#98C379" })     -- For stopped threads (green)
+vim.api.nvim_set_hl(0, "DapUIFrameName", { fg = "#E5C07B" })         -- For function frames (yellow)
+vim.api.nvim_set_hl(0, "DapUISource", { fg = "#61AFEF" })            -- For source files (blue)
+vim.api.nvim_set_hl(0, "DapUILineNumber", { fg = "#ABB2BF" })        -- For line numbers (light gray)
+vim.api.nvim_set_hl(0, "DapUIFloatBorder", { fg = "#56B6C2" })       -- For borders in floating windows (cyan)
+vim.api.nvim_set_hl(0, "DapUIWatchesEmpty", { fg = "#E06C75" })      -- For empty watches (red)
+vim.api.nvim_set_hl(0, "DapUIWatchesValue", { fg = "#98C379" })      -- For watch values (green)
+vim.api.nvim_set_hl(0, "DapUIWatchesError", { fg = "#E06C75" })      -- For watch errors (red)
+vim.api.nvim_set_hl(0, "DapUIBreakpointsPath", { fg = "#E5C07B" })   -- For breakpoint paths (yellow)
+vim.api.nvim_set_hl(0, "DapUIBreakpointsInfo", { fg = "#61AFEF" })   -- For breakpoint info (blue)
+vim.api.nvim_set_hl(0, "DapUIBreakpointsCurrentLine", { fg = "#98C379", bold = true })  -- For breakpoints on the current line (green, bold)
+vim.api.nvim_set_hl(0, "DapUIStop", { fg = "#E06C75", bold = true }) -- For stopped debugging steps (red, bold)
+vim.api.nvim_set_hl(0, "DapUIPlayPause", { fg = "#61AFEF" })         -- For play/pause buttons (blue)
+vim.api.nvim_set_hl(0, "DapUIStepOver", { fg = "#E5C07B" })          -- For step over button (yellow)
+vim.api.nvim_set_hl(0, "DapUIStepInto", { fg = "#98C379" })          -- For step into button (green)
+vim.api.nvim_set_hl(0, "DapUIStepOut", { fg = "#56B6C2" })           -- For step out button (cyan)
+vim.api.nvim_set_hl(0, "DapUIRestart", { fg = "#C678DD" })           -- For restart button (purple)
+vim.api.nvim_set_hl(0, "DapUITerminate", { fg = "#E06C75", bold = true }) -- For terminate button (red, bold)
