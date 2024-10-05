@@ -37,3 +37,11 @@ require('plugins')
 require('pluginscfg')
 require('options')
 require('keymaps')
+
+
+vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
+  pattern = {"*.c", "*.cpp", "*.h", "*.cs"},
+  callback = function()
+    vim.cmd("AerialToggle")
+  end
+})
