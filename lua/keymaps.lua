@@ -5,13 +5,6 @@ local functions = require('functions')
 -- lets override vims weird register switching when pasting in visual mode...
 vim.keymap.set("x", "p", function() return 'pgv"' .. vim.v.register .. "y" end, { remap = false, expr = true })
 
--- ..and dont yank on x
-vim.keymap.set({"n", "v"}, "x", '"_x', { noremap = true })
-
--- don't yank on <C-d>/<C-dd>
-vim.keymap.set({"v"}, "<C-d>", '"_d', { noremap = true })
-vim.keymap.set("n", "<C-d><C-d>", '"_dd', { noremap = true })
-
 -- remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -22,6 +15,28 @@ vim.keymap.set('n', ';', ':', { noremap = true })
 -- move line
 vim.keymap.set({"n", "v"}, "<A-j>", ':m+1<CR>==', { noremap = true })
 vim.keymap.set({"n", "v"}, "<A-k>", ':m-2<CR>==', { noremap = true })
+--------------------------------------------------------------------------
+-- YANKING
+--------------------------------------------------------------------------
+
+-- yank into separate registers on x, d, dd, c
+vim.keymap.set({"n", "v"}, "x", '"xx', { noremap = true })
+vim.keymap.set({"v"}, "d", '"dd', { noremap = true })
+vim.keymap.set({"n"}, "dd", '"ddd', { noremap = true })
+
+-- Yank into separate register on change commands
+vim.keymap.set({"n", "v"}, "c", '"cc', { noremap = true })
+vim.keymap.set("n", "cc", '"ccc', { noremap = true })
+vim.keymap.set("n", "ci", '"cci', { noremap = true })
+vim.keymap.set("n", "cw", '"ccw', { noremap = true })
+vim.keymap.set("n", "cW", '"ccW', { noremap = true })
+vim.keymap.set("n", "ct", '"cct', { noremap = true })
+vim.keymap.set("n", "cf", '"ccf', { noremap = true })
+
+-- yank on <C-d>/<C-dd>
+vim.keymap.set({"v"}, "<C-d>", 'd', { noremap = true })
+vim.keymap.set("n", "<C-d><C-d>", 'dd', { noremap = true })
+
 
 --------------------------------------------------------------------------
 -- TEXT NAVIGATION
