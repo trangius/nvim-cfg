@@ -19,6 +19,9 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- remap ; to : in normal mode
 vim.keymap.set('n', ';', ':', { noremap = true })
 
+-- move line
+vim.keymap.set({"n", "v"}, "<A-j>", ':m+1<CR>==', { noremap = true })
+vim.keymap.set({"n", "v"}, "<A-k>", ':m-2<CR>==', { noremap = true })
 
 --------------------------------------------------------------------------
 -- TEXT NAVIGATION
