@@ -43,5 +43,6 @@ vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
   pattern = {"*.c", "*.cpp", "*.h", "*.cs"},
   callback = function()
     vim.cmd("AerialToggle")
+    vim.cmd("wincmd p")  -- go back to the previous window, we don't want Aerial to be focused
   end
 })
