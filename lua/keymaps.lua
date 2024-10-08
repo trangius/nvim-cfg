@@ -13,8 +13,8 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', ';', ':', { noremap = true })
 
 -- move line
-vim.keymap.set({"n", "v"}, "<A-j>", ':m+1<CR>==', { noremap = true })
-vim.keymap.set({"n", "v"}, "<A-k>", ':m-2<CR>==', { noremap = true })
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 --------------------------------------------------------------------------
 -- YANKING
 --------------------------------------------------------------------------
