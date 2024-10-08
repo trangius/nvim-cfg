@@ -19,10 +19,8 @@ vim.keymap.set({"n", "v"}, "<A-k>", ':m-2<CR>==', { noremap = true })
 -- YANKING
 --------------------------------------------------------------------------
 
--- yank into separate registers on x, d, dd, c
+-- yank into separate registers on x, c
 vim.keymap.set({"n", "v"}, "x", '"xx', { noremap = true })
-vim.keymap.set({"v"}, "d", '"dd', { noremap = true })
-vim.keymap.set({"n"}, "dd", '"ddd', { noremap = true })
 
 -- Yank into separate register on change commands
 vim.keymap.set({"n", "v"}, "c", '"cc', { noremap = true })
@@ -33,9 +31,9 @@ vim.keymap.set("n", "cW", '"ccW', { noremap = true })
 vim.keymap.set("n", "ct", '"cct', { noremap = true })
 vim.keymap.set("n", "cf", '"ccf', { noremap = true })
 
--- yank on <C-d>/<C-dd>
-vim.keymap.set({"v"}, "<C-d>", 'd', { noremap = true })
-vim.keymap.set("n", "<C-d><C-d>", 'dd', { noremap = true })
+-- don't yank on <C-d>/<C-dd>
+vim.keymap.set({"v"}, "<C-d>", '"dd', { noremap = true })
+vim.keymap.set("n", "<C-d><C-d>", '"ddd', { noremap = true })
 
 
 --------------------------------------------------------------------------
