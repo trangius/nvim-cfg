@@ -22,24 +22,31 @@ require('lazy').setup({
 		end
 	},
 
-	-- Set lualine as statusline
-	{
-		'nvim-lualine/lualine.nvim',
-		opts = {
-			options = {
-				icons_enabled = false,
-				theme = 'onedark',
-				component_separators = '|',
-				section_separators = '',
-			},
-		  sections = {
-			lualine_a = {'mode'},
-			lualine_b = {'buffers'},
-			lualine_c = {}, -- do not print name of current buffer, since we already see which one since lualine_b shows buffers
-		  },
-
-		},
-	},
+{
+  'nvim-lualine/lualine.nvim',
+  opts = {
+    options = {
+      icons_enabled = false,
+      theme = 'onedarkbleak',
+      component_separators = '|',
+      section_separators = '',
+    },
+    sections = {
+      lualine_a = {'mode'},
+      lualine_b = {
+{
+  'buffers',
+  symbols = { alternate_file = '' },
+  buffers_color = {
+            active = { fg = '#e5e9f0', bg = '#3b4252' },  -- Ljusgrå text på mörkgrå bakgrund för aktiv buffer
+            inactive = { fg = '#4c566a', bg = '#2e3440' },  -- Mörkare grå text på mörkare bakgrund för inaktiv buffer
+  },
+}
+      },
+      lualine_c = {}, -- do not print name of current buffer, since we already see which one since lualine_b shows buffers
+    },
+  },
+},
 
 	-- Useful plugin to show you pending keybinds.
 	{ 'folke/which-key.nvim', opts = {} },
