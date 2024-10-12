@@ -247,6 +247,13 @@ vim.keymap.set('n', '<leader>h', require('functions').open_myhelp_popup, { norem
 vim.keymap.set('n', '<leader>t', require('functions').terminal_here, { noremap = true, silent = true, desc = 'Terminal here' })
 vim.keymap.set('t', '<C-q>', require('functions').terminal_close, { noremap = true, silent = true, desc = 'Close terminal split' })
 
+local function reload_config()
+  vim.cmd('source $MYVIMRC')
+  print("Config reloaded!")
+end
+
+-- Mappar <leader>r för att reloada konfigurationen
+vim.keymap.set('n', '<leader>r', reload_config, { noremap = true, silent = true, desc = 'Reload config' })
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS
 --------------------------------------------------------------------------
