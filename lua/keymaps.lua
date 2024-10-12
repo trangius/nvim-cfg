@@ -18,7 +18,6 @@ vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true
 --------------------------------------------------------------------------
 -- YANKING
 --------------------------------------------------------------------------
-
 -- yank into separate registers on x, c
 vim.keymap.set({"n", "v"}, "x", '"xx', { noremap = true })
 
@@ -82,8 +81,8 @@ require('which-key').add(normal_mappings, { mode = "n" })
 --------------------------------------------------------------------------
 -- BUFFER KEYMAPS
 --------------------------------------------------------------------------
-vim.keymap.set('n', '<leader>bc', ':bd<CR>', { noremap = true, silent = true, desc = 'Close buffer (Ctrl-x)' })
-vim.keymap.set('n', '<C-x>', ':bd<CR>', { noremap = true, silent = true, desc = 'Close buffer' })
+vim.keymap.set({'n', 'v'}, '<leader>bc', require('functions').buffer_close_with_aerial, { noremap = true, silent = true, desc = 'Close buffer (C-x)' })
+vim.keymap.set({'n', 'v'}, '<C-x>', require('functions').buffer_close_with_aerial, { noremap = true, silent = true, desc = 'Close buffer (C-x)' })
 vim.keymap.set('n', '<leader>bn', ':enew<CR>', { noremap = true, silent = true, desc = 'New buffer' })
 vim.keymap.set('n', '<leader>bh', ':new<CR>', { noremap = true, silent = true, desc = 'Horizontal split with new buffer' })
 vim.keymap.set('n', '<leader>bv', ':vnew<CR>', { noremap = true, silent = true, desc = 'Vertical split with new buffer' })
