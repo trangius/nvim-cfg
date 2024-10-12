@@ -116,4 +116,15 @@ function M.toggle_chars()
   end
 end
 
+
+function M.buffer_close_with_aerial()
+  if require('aerial').is_open() then
+    require('aerial').toggle()
+    vim.cmd('bd')
+    require('aerial').toggle({ focus = false })
+  else
+    vim.cmd('bd')
+  end
+end
+
 return M

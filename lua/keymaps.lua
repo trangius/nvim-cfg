@@ -223,7 +223,9 @@ end, { desc = 'Quit debugger' })
 --------------------------------------------------------------------------
 -- AERIAL KEYMAPS
 --------------------------------------------------------------------------
-vim.keymap.set({'n', 'v', 'i'}, '<C-a>', function() require('aerial').toggle() end, { desc = 'Aerial toggle' })
+vim.keymap.set({'n', 'v', 'i'}, '<A-a>', function()
+  require('aerial').toggle({ focus = false })
+end, { desc = 'Aerial toggle without focus' })
 vim.keymap.set({'n', 'v', 'i'}, '<C-j>', function() require('aerial').next() end, { desc = 'Aerial next' })
 vim.keymap.set({'n', 'v', 'i'}, '<C-k>', function() require('aerial').prev() end, { desc = 'Aerial previous' })
 
