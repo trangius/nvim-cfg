@@ -2,16 +2,15 @@ require('lazy').setup({
 	---------------------------------------------------------------
 	-- LOOK & FEEL
 	---------------------------------------------------------------
-	-- Theme inspired by Atom
-	{
-		'navarasu/onedark.nvim',
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme 'onedark'
-		end,
-	},
+{
+    'trangius/onedarkbleak.nvim',
+    priority = 1000,
+    config = function()
+        vim.cmd.colorscheme 'onedarkbleak'
+    end,
+},
 
-	-- Nice scrollbar
+    -- Nice scrollbar
 	'petertriho/nvim-scrollbar',
 
 	-- a sidebar with class/function list to step trough

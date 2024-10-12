@@ -1,12 +1,6 @@
 ---------------------------------------------------------------
 -- LOOK & FEEL
 ---------------------------------------------------------------
--- Onedark setup
-require('onedark').setup {
-    style = 'warm'
-}
-require('onedark').load()
--- Scrollbar setup
 require("scrollbar").setup({
 	handle = {
 		color = '#5c6370', -- Adjust to match onedark's scrollbar handle color
