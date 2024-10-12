@@ -95,10 +95,8 @@ vim.keymap.set('n', '<A-C-h>', ':vertical resize -2<CR>', {desc = 'Decrease widt
 vim.keymap.set('n', '<A-C-l>', ':vertical resize +2<CR>', {desc = 'Increase width'})
 vim.keymap.set('n', '<A-C-j>', ':resize +2<CR>', {desc = 'Increase height'})
 vim.keymap.set('n', '<A-C-k>', ':resize -2<CR>', {desc = 'Decrease height'})
-vim.keymap.set({"n", "v"}, '<A-h>', ':bprevious<CR>', {noremap = true, silent = true})
-vim.keymap.set({"n", "v"}, '<A-l>', ':bnext<CR>', {noremap = true, silent = true})
-vim.keymap.set({"n", "v"}, '<C-h>', ':bprevious<CR>', {noremap = true, silent = true})
-vim.keymap.set({"n", "v"}, '<C-l>', ':bnext<CR>', {noremap = true, silent = true})
+vim.keymap.set({"n", "v"}, 'T', ':bprevious<CR>', {noremap = true, silent = true})
+vim.keymap.set({"n", "v"}, 't', ':bnext<CR>', {noremap = true, silent = true})
 
 
 --------------------------------------------------------------------------
