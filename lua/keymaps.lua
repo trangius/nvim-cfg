@@ -268,7 +268,6 @@ vim.keymap.set('v', '<leader>lw', 'di\\cw{}<ESC>P', { desc = 'Insert inline code
 --------------------------------------------------------------------------
 -- MISC FUNCTIONS (defined in functions.lua) KEYMAPS
 --------------------------------------------------------------------------
-vim.keymap.set('n', '<leader>n', functions.reload_lua_config, { noremap = true, silent = true, desc = 'Reload nvim config' })
 vim.keymap.set('n', '<leader>h', require('functions').open_myhelp_popup, { noremap = true, silent = true, desc = 'Help/Tips' })
 vim.keymap.set('n', '<leader>t', require('functions').terminal_here, { noremap = true, silent = true, desc = 'Terminal here' })
 vim.keymap.set('t', '<C-q>', require('functions').terminal_close, { noremap = true, silent = true, desc = 'Close terminal split' })
