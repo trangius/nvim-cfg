@@ -73,6 +73,8 @@ local normal_mappings = {
     { "<leader>f_", hidden = true },
     { "<leader>p", group = "Persistence" },
     { "<leader>p_", hidden = true },
+    { "<leader>l", group = "Latex" },
+    { "<leader>l_", hidden = true },
   }
 
 
@@ -236,6 +238,31 @@ vim.keymap.set({'n', 'v', 'i'}, '<C-k>', function() require('aerial').prev() end
 vim.keymap.set("n", "<leader>ps", [[<cmd>lua require("persistence").load()<cr>]], { desc = "Load session" })
 vim.keymap.set("n", "<leader>pl", [[<cmd>lua require("persistence").load({ last = true })<cr>]], { desc = "Load last session" })
 vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]], { desc = "Stop persistence" })
+
+
+--------------------------------------------------------------------------
+-- LATEX KEYMAPS
+--------------------------------------------------------------------------
+-- normal
+vim.keymap.set('n', '<leader>lc', 'i\\begin{csharp}[caption={},label={}]<CR>\\end{csharp}<CR><ESC>k', { desc = 'Insert C# block' })
+vim.keymap.set('n', '<leader>lp', 'i\\begin{pseudo}[caption={},label={}]<CR>\\end{pseudo}<CR><ESC>k', { desc = 'Insert pseudo code block' })
+vim.keymap.set('n', '<leader>lt', 'i\\begin{console}[caption={},label={}]<CR>\\end{console}<CR><ESC>k', { desc = 'Insert terminal/console block' })
+vim.keymap.set('n', '<leader>lh', 'i\\boxteknisk{<CR>}<CR><ESC>k', { desc = 'Insert technical box' })
+vim.keymap.set('n', '<leader>ll', 'i\\boxlinks{<CR>}<CR><ESC>k', { desc = 'Insert link box' })
+
+vim.keymap.set('n', '<leader>lw', 'a\\cw{}<ESC>i', { desc = 'Insert inline code' })
+vim.keymap.set('n', '<leader>lk', 'a\\chapter{}<ESC>i', { desc = 'Insert chapter' })
+vim.keymap.set('n', '<leader>ls', 'a\\section{}<ESC>i', { desc = 'Insert section' })
+vim.keymap.set('n', '<leader>le', 'a\\emph{}<ESC>i', { desc = 'Insert emphasis' })
+vim.keymap.set('n', '<leader>l-', 'a–<ESC>', { desc = 'Insert – symbol' })
+
+vim.keymap.set('v', '<leader>lt', 'di\\boxteknisk{<CR>}<CR><ESC>kP', { desc = 'Insert technical box' })
+vim.keymap.set('v', '<leader>ll', 'di\\boxlinks{<CR>}<CR><ESC>kP', { desc = 'Insert link box' })
+
+vim.keymap.set('v', '<leader>lk', 'di\\chapter{}<ESC>P', { desc = 'Insert chapter' })
+vim.keymap.set('v', '<leader>ls', 'di\\section{}<ESC>P', { desc = 'Insert section' })
+vim.keymap.set('v', '<leader>le', 'di\\emph{}<ESC>P', { desc = 'Insert emphasis' })
+vim.keymap.set('v', '<leader>lw', 'di\\cw{}<ESC>P', { desc = 'Insert inline code' })
 
 
 --------------------------------------------------------------------------
