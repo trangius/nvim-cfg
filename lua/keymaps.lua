@@ -235,8 +235,8 @@ vim.keymap.set({'n', 'v', 'i'}, '<C-k>', function() require('aerial').prev() end
 -- PERSISTENCE KEYMAPS
 --------------------------------------------------------------------------
 -- restore the session for the current directory
-vim.keymap.set("n", "<leader>ps", [[<cmd>lua require("persistence").load()<cr>]], { desc = "Load session" })
-vim.keymap.set("n", "<leader>pl", [[<cmd>lua require("persistence").load({ last = true })<cr>]], { desc = "Load last session" })
+vim.keymap.set("n", "<leader>pl", [[<cmd>lua require("persistence").load()<cr>]], { desc = "Load lasts local session (current directory)" })
+vim.keymap.set("n", "<leader>pg", [[<cmd>lua require("persistence").load({ last = true })<cr>]], { desc = "Load last global session" })
 vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]], { desc = "Stop persistence" })
 
 
