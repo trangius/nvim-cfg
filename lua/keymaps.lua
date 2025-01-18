@@ -266,7 +266,7 @@ vim.keymap.set('v', '<leader>lw', 'di\\cw{}<ESC>P', { desc = 'Insert inline code
 
 
 --------------------------------------------------------------------------
--- MISC FUNCTIONS (defined in functions.lua) KEYMAPS
+-- MISC FUNCTIONS (defined in functions.lua or here directley) KEYMAPS
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>h', require('functions').open_myhelp_popup, { noremap = true, silent = true, desc = 'Help/Tips' })
 vim.keymap.set('n', '<leader>t', require('functions').terminal_here, { noremap = true, silent = true, desc = 'Terminal here' })
@@ -279,6 +279,31 @@ end
 
 -- Mappar <leader>r för att reloada konfigurationen
 vim.keymap.set('n', '<leader>r', reload_config, { noremap = true, silent = true, desc = 'Reload config' })
+
+
+
+-- Move to the end of the previous line in visual mode when pressing 'h' at the beginning
+vim.keymap.set('x', 'h', function()
+    local col = vim.fn.col('.')
+    if col == 1 then
+        return 'k$'
+    else
+        return 'h'
+    end
+end, { expr = true, noremap = true })
+
+-- Move to the beginning of the next line in visual mode when pressing 'l' at the end
+vim.keymap.set('x', 'l', function()
+    local col = vim.fn.col('.')
+    local line_length = vim.fn.col('$') - 1 -- Last column in the current line
+
+    if col == line_length then
+        return 'j0'
+    else
+        return 'l'
+    end
+end, { expr = true, noremap = true })
+
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS
 --------------------------------------------------------------------------
