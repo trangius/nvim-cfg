@@ -15,6 +15,28 @@ require("scrollbar").setup({
 	},
 })
 
+local ignore_filetypes_list = {
+    "venv", "__pycache__", "node_modules", "build", "dist", "target", ".git", ".hg", ".svn", ".cache",
+    "%.png", "%.jpg", "%.jpeg", "%.webp", "%.gif", "%.svg", "%.ico", "%.psd", "%.xcf", "%.bmp", "%.tiff",
+    "%.pdf", "%.doc", "%.docx", "%.odt", "%.xls", "%.xlsx", "%.ppt", "%.pptx",
+    "%.o", "%.so", "%.a", "%.out", "%.class", "%.pyc", "%.pyo", "%.exe", "%.dll", "%.dylib", "%.wasm", "%.elf",
+    "%.zip", "%.tar", "%.tar.gz", "%.tgz", "%.bz2", "%.7z", "%.rar", "%.xz", "%.zst", "%.apk", "%.deb", "%.rpm", "%.iso",
+    "%.aux", "%.bbl", "%.blg", "%.dvi", "%.log", "%.synctex.gz", "%.toc", "%.fdb_latexmk", "%.fls",
+    "%.swp", "%.swo", "%.bak", "%.tmp", "~$", "%.DS_Store", "Thumbs.db",
+    "%.mp3", "%.wav", "%.ogg", "%.flac", "%.mp4", "%.mkv", "%.mov", "%.avi", "%.wmv",
+}
+
+require('telescope').setup {
+	defaults = {
+		mappings = {
+			i = {
+				['<C-u>'] = false,
+				['<C-d>'] = false,
+			},
+		},
+        file_ignore_patterns = ignore_filetypes_list
+	},
+}
 -- Configure Telescope
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -25,6 +47,7 @@ require('telescope').setup {
 				['<C-d>'] = false,
 			},
 		},
+        file_ignore_patterns = ignore_filetypes_list
 	},
 }
 
