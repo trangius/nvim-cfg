@@ -116,9 +116,50 @@ local servers = {
 }
 
 
-for server, config in pairs(servers) do
-    require('lspconfig')[server].setup(config)
-end
+-- === NEW LSP SETUP (Nvim 0.11+) ===
+-- nvim-cmp capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+pcall(function()
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+end)
+
+-- Use a single LspAttach autocmd for keymaps/formatting
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local opts = { buffer = bufnr, silent = true, noremap = true }
+    -- keep your on_attach Format command available
+    pcall(on_attach, nil, bufnr)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K',  vim.lsp.buf.hover, opts)
+  end,
+})
+
+-- Define per-server configs using the new API
+vim.lsp.config('clangd', {
+  capabilities = capabilities,
+})
+
+vim.lsp.config('csharp_ls', {
+  capabilities = capabilities,
+})
+
+vim.lsp.config('html', {
+  capabilities = capabilities,
+  filetypes = { 'html', 'twig', 'hbs' },
+})
+
+vim.lsp.config('lua_ls', {
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+      diagnostics = { globals = { 'vim' } },
+    },
+  },
+})
+
 -- Configure Treesitter
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
@@ -183,26 +224,17 @@ end, 0)
 require('neodev').setup()
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+-- (capabilities already defined above and reused)
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
 	ensure_installed = vim.tbl_keys(servers),
+  automatic_enable = true,
 }
 
-mason_lspconfig.setup_handlers {
-	function(server_name)
-		require('lspconfig')[server_name].setup {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			settings = servers[server_name],
-			filetypes = (servers[server_name] or {}).filetypes,
-		}
-	end,
-}
+-- (Removed deprecated mason_lspconfig.setup_handlers and lspconfig.setup calls)
 
 -- Configure nvim-cmp, auto completion
 -- See `:help cmp`
