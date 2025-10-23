@@ -142,6 +142,18 @@ vim.lsp.config('clangd', {
 
 vim.lsp.config('csharp_ls', {
   capabilities = capabilities,
+  handlers = {
+    -- Slå av spamloggar
+    ["window/logMessage"] = function() end,
+    -- Visa bara fel, ignorera INFO/WARN
+    ["window/showMessage"] = function(_, result, ctx)
+      local mt = vim.lsp.protocol.MessageType
+      if result.type == mt.Error then
+        return vim.lsp.handlers["window/showMessage"](_, result, ctx)
+      end
+      -- annars: tyst
+    end,
+  },
 })
 
 vim.lsp.config('html', {
