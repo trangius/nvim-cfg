@@ -43,7 +43,7 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 -- Relative line number
-vim.wo.relativenumber = true 
+vim.wo.relativenumber = false
 
 -- Mark cursor line
 vim.wo.cursorline = true
