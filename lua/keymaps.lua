@@ -133,9 +133,8 @@ vim.keymap.set('n', '<leader>,', function()
   require('telescope').extensions.file_browser.file_browser({
     hidden = true,
     respect_gitignore = false,
-    use_fd = false,  -- Use 'find' instead of 'fd'
-    cwd = '.',       -- Set current directory
-    find_command = { 'find', '.', '-type', 'f', '-or', '-type', 'l', '-print' },
+    use_fd = false,
+    cwd = '.',
   })
 end, { desc = 'Browse files' })
 
