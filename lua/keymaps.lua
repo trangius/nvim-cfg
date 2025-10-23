@@ -46,7 +46,7 @@ vim.keymap.set({"n", "v"}, "K", "10k", { noremap = true })
 vim.keymap.set({"n", "v", "o"}, "H", "^", { noremap = true })
 vim.keymap.set({"n", "v", "o"}, "L", "$", { noremap = true })
 -- use hop
-vim.keymap.set('n', '<C-o>', require'hop'.hint_char1, { noremap = true, silent = true, desc = 'Hop to char' })
+vim.keymap.set('n', '<C-h>', require'hop'.hint_char1, { noremap = true, silent = true, desc = 'Hop to char' })
 
 
 --------------------------------------------------------------------------
