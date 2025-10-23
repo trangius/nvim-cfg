@@ -265,6 +265,17 @@ vim.keymap.set('v', '<leader>le', 'di\\emph{}<ESC>P', { desc = 'Insert emphasis'
 vim.keymap.set('v', '<leader>lw', 'di\\cw{}<ESC>P', { desc = 'Insert inline code' })
 
 
+vim.keymap.set('v', '<leader>li', 'c(*@\\textcolor{black}{<C-R>"}@*)<Esc>', { noremap = true, silent = true, desc = "Wrap selection with LaTeX formatting" })
+
+vim.keymap.set('n', '<leader>lx', function()
+  pcall(vim.cmd, [[%s/C\\\#/Python/g]])
+  pcall(vim.cmd, [[%s/\<csharp\>/python/g]])
+  pcall(vim.cmd, [[%s/\<true\>/True/g]])
+  pcall(vim.cmd, [[%s/\<false\>/False/g]])
+  pcall(vim.cmd, [[%s/\(\w\+\)\s*&&\s*\(\w\+\)/\1 and \2/g]])
+  pcall(vim.cmd, [[%s/\(\w\+\)\s*||\s*\(\w\+\)/\1 or \2/g]])
+  pcall(vim.cmd, [[%s/\<else if\>/elif/g]])
+end, { desc = 'Convert C# to Python-style syntax' })
 --------------------------------------------------------------------------
 -- MISC FUNCTIONS (defined in functions.lua or here directley) KEYMAPS
 --------------------------------------------------------------------------
