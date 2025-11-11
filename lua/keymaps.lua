@@ -41,8 +41,17 @@ vim.keymap.set("n", "<C-d><C-d>", '"ddd', { noremap = true })
 --------------------------------------------------------------------------
 -- TEXT NAVIGATION
 --------------------------------------------------------------------------
+-- prevent the default LSP K mapping:
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    vim.keymap.del('n', 'K', { buffer = args.buf })
+    -- Re-add your custom K mapping for this buffer
+    vim.keymap.set({"n", "v"}, "K", "10k", { noremap = true, silent = true, buffer = args.buf })
+  end,
+})
+
+
 vim.keymap.set({"n", "v"}, "J", "10j", { noremap = true })
-vim.keymap.set({"n", "v"}, "K", "10k", { noremap = true })
 vim.keymap.set({"n", "v", "o"}, "H", "^", { noremap = true })
 vim.keymap.set({"n", "v", "o"}, "L", "$", { noremap = true })
 -- use hop
