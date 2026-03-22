@@ -287,6 +287,8 @@ vim.keymap.set('n', '<leader>lx', function()
   pcall(vim.cmd, [[%s/\(\w\+\)\s*||\s*\(\w\+\)/\1 or \2/g]])
   pcall(vim.cmd, [[%s/\<else if\>/elif/g]])
 end, { desc = 'Convert C# to Python-style syntax' })
+
+
 --------------------------------------------------------------------------
 -- MISC FUNCTIONS (defined in functions.lua or here directley) KEYMAPS
 --------------------------------------------------------------------------
@@ -325,6 +327,36 @@ vim.keymap.set('x', 'l', function()
         return 'l'
     end
 end, { expr = true, noremap = true })
+
+-- Execute code
+-- Execute code
+vim.keymap.set('n', '<leader>cx', function()
+  local file = vim.fn.expand('%:p')
+  local ext = vim.fn.expand('%:e')
+  local cmd
+  if ext == 'py' then
+    cmd = 'python3 ' .. file
+  elseif ext == 'c' then
+    local out = vim.fn.expand('%:p:r')
+    cmd = 'gcc ' .. file .. ' -o ' .. out .. ' && ' .. out
+  elseif #vim.fn.glob('*.csproj', false, true) > 0
+      or #vim.fn.glob('*.sln', false, true) > 0 then
+    cmd = 'dotnet run'
+  elseif ext == 'cs' then
+    cmd = 'dotnet run ' .. file
+  else
+    print('No runner for filetype: ' .. ext)
+    return
+  end
+  local tmpfile = '~/tmp/nvim_run_out.txt'
+  vim.fn.system('zsh -c "' .. cmd .. ' >' .. tmpfile .. ' 2>&1"')
+  if vim.v.shell_error ~= 0 then
+    local sr = vim.o.splitright
+    vim.o.splitright = true
+    vim.cmd('vsplit | terminal zsh -c "cat ' .. tmpfile .. '; echo \'--- press any key ---\'; read -q"')
+    vim.o.splitright = sr
+  end
+end, { noremap = true, silent = true, desc = 'Run file' })
 
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS

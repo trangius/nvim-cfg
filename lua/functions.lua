@@ -118,12 +118,13 @@ end
 
 
 function M.buffer_close_with_aerial()
+  local bd = vim.bo.buftype == 'terminal' and 'bd!' or 'bd'
   if require('aerial').is_open() then
     require('aerial').toggle()
-    vim.cmd('bd')
+    vim.cmd(bd)
     require('aerial').toggle({ focus = false })
   else
-    vim.cmd('bd')
+    vim.cmd(bd)
   end
 end
 
