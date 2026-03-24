@@ -1,5 +1,6 @@
 local M = {}
 
+-- Fuzzy search within the current buffer using Telescope dropdown
 function M.search_in_current_buffer()
 	require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
 		winblend = 10,
@@ -7,8 +8,9 @@ function M.search_in_current_buffer()
 	})
 end
 
+-- Open a centered floating popup with a border, displaying the given lines
 function M.open_popup(lines, width_pct, height_pct)
-	local buf = vim.api.nvim_create_buf(false, true) -- create new buffer
+	local buf = vim.api.nvim_create_buf(false, true)
 
 	-- calculate size
 	local width = vim.o.columns
@@ -54,12 +56,13 @@ function M.open_popup(lines, width_pct, height_pct)
 	-- set the predefined lines
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
-	-- close popup with ESC
+	-- close popup with ESC or Enter
 	local close_cmd = string.format(":lua require'functions'.close_popup(%d, %d)<CR>", win, border_win)
 	vim.api.nvim_buf_set_keymap(buf, 'n', '<ESC>', close_cmd, {noremap = true, silent = true})
 	vim.api.nvim_buf_set_keymap(buf, 'n', '<C-m>', close_cmd, {noremap = true, silent = true})
 end
 
+-- Close a popup and its border window
 function M.close_popup(win, border_win)
     if vim.api.nvim_win_is_valid(win) then
         vim.api.nvim_win_close(win, true)
@@ -69,6 +72,7 @@ function M.close_popup(win, border_win)
     end
 end
 
+-- Read all lines from a file and return them as a table
 function M.load_lines_from_file(filepath)
     local lines = {}
     local file = io.open(filepath, "r")
@@ -83,21 +87,25 @@ function M.load_lines_from_file(filepath)
     return lines
 end
 
+-- Open the help file in a floating popup
 function M.open_myhelp_popup()
     local lines = M.load_lines_from_file(vim.fn.stdpath('config') .. '/help')
     M.open_popup(lines, 0.6, 0.8)
 end
 
+-- Open a terminal in a vertical split at the current file's directory
 function M.terminal_here()
 	vim.cmd("vsplit | terminal")
 	vim.cmd("startinsert")
 end
 
+-- Close the current terminal split
 function M.terminal_close()
 	vim.api.nvim_command('stopinsert')
 	vim.api.nvim_command('q')
 end
 
+-- Toggle visibility of invisible characters (tabs, trailing spaces)
 function M.toggle_chars()
   if vim.opt.list:get() then
     vim.opt.list = false
@@ -107,7 +115,7 @@ function M.toggle_chars()
   end
 end
 
-
+-- Close buffer, re-opening aerial if it was open so layout stays intact
 function M.buffer_close_with_aerial()
   local bd = vim.bo.buftype == 'terminal' and 'bd!' or 'bd'
   if require('aerial').is_open() then
@@ -119,6 +127,8 @@ function M.buffer_close_with_aerial()
   end
 end
 
+-- Run the current file based on filetype (python, c, c#)
+-- Opens a terminal split on error to show output
 function M.run_file()
   local file = vim.fn.expand('%:p')
   local ext = vim.fn.expand('%:e')
