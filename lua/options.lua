@@ -55,6 +55,9 @@ vim.o.wildignore = '*.o,*.rej,*.so'
 vim.o.showmode = false
 
 
+-- Undotree takes up half the screen
+vim.g.undotree_SplitWidth = math.ceil(vim.o.columns / 2)
+
 -- Automatically check if a file has changed outside of Neovim and reload it
 vim.o.autoread = true
 

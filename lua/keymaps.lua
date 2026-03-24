@@ -95,6 +95,7 @@ require('which-key').add(normal_mappings, { mode = "n" })
 --------------------------------------------------------------------------
 -- BUFFER KEYMAPS
 --------------------------------------------------------------------------
+vim.keymap.set('n', '<leader>bu', vim.cmd.UndotreeToggle, { noremap = true, silent = true, desc = 'Undo tree' })
 vim.keymap.set({'n', 'v'}, '<leader>bc', require('functions').buffer_close_with_aerial, { noremap = true, silent = true, desc = 'Close buffer (C-x)' })
 vim.keymap.set({'n', 'v'}, '<C-x>', require('functions').buffer_close_with_aerial, { noremap = true, silent = true, desc = 'Close buffer (C-x)' })
 vim.keymap.set('n', '<leader>bn', ':enew<CR>', { noremap = true, silent = true, desc = 'New buffer' })
