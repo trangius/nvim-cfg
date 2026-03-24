@@ -123,15 +123,12 @@ pcall(function()
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 end)
 
--- Use a single LspAttach autocmd for keymaps/formatting
+-- Use a single LspAttach autocmd for formatting
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local bufnr = args.buf
-    local opts = { buffer = bufnr, silent = true, noremap = true }
     -- keep your on_attach Format command available
     pcall(on_attach, nil, bufnr)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K',  vim.lsp.buf.hover, opts)
   end,
 })
 
