@@ -10,6 +10,9 @@ require('lazy').setup({
     end,
 },
 
+    -- File icons (used by telescope, lualine, etc.)
+	'nvim-tree/nvim-web-devicons',
+
     -- Nice scrollbar
 	'petertriho/nvim-scrollbar',
 
