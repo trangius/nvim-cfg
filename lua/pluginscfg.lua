@@ -87,7 +87,7 @@ end
 -- for csharp_ls to install, we need dotnet installed
 require('mason').setup()
 require('mason-lspconfig').setup({
-    ensure_installed = { "lua_ls", "html", "csharp_ls", "clangd" },
+    ensure_installed = { "lua_ls", "html", "omnisharp", "clangd" },
     automatic_installation = true,
 })
 
@@ -105,7 +105,7 @@ local servers = {
 	-- pyright = {},
 	-- rust_analyzer = {},
 	-- tsserver = {}
-    csharp_ls = {},
+    omnisharp = {},
 	html = { filetypes = { 'html', 'twig', 'hbs' } },
 	lua_ls = {
 		Lua = {
@@ -140,7 +140,7 @@ vim.lsp.config('clangd', {
   capabilities = capabilities,
 })
 
-vim.lsp.config('csharp_ls', {
+vim.lsp.config('omnisharp', {
   capabilities = capabilities,
   handlers = {
     -- Slå av spamloggar
