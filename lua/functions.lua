@@ -1,14 +1,5 @@
 local M = {}
 
-function M.reload_lua_config()
-	for name, _ in pairs(package.loaded) do
-		if name:match("^c") and not name:match("^core") then
-			package.loaded[name] = nil
-		end
-	end
-	dofile(vim.env.MYVIMRC)
-end
-
 function M.search_in_current_buffer()
 	require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
 		winblend = 10,
@@ -20,8 +11,8 @@ function M.open_popup(lines, width_pct, height_pct)
 	local buf = vim.api.nvim_create_buf(false, true) -- create new buffer
 
 	-- calculate size
-	local width = vim.api.nvim_get_option("columns")
-	local height = vim.api.nvim_get_option("lines")
+	local width = vim.o.columns
+	local height = vim.o.lines
 	local win_width = math.ceil(width * width_pct)
 	local win_height = math.ceil(height * height_pct)
 	local win_row = math.ceil((height - win_height) / 2)
@@ -55,10 +46,10 @@ function M.open_popup(lines, width_pct, height_pct)
 		col = win_col
 	}
 	local win = vim.api.nvim_open_win(buf, true, opts)
-	vim.api.nvim_win_set_option(win, 'cursorline', true)
-	vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
-	vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
-	vim.api.nvim_buf_set_option(buf, 'swapfile', false)
+	vim.wo[win].cursorline = true
+	vim.bo[buf].buftype = 'nofile'
+	vim.bo[buf].bufhidden = 'hide'
+	vim.bo[buf].swapfile = false
 
 	-- set the predefined lines
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)

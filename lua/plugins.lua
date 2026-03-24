@@ -260,12 +260,7 @@ require('lazy').setup({
 	{
 		'p00f/clangd_extensions.nvim',
 		config = function()
-			require("clangd_extensions").setup {
-				server = {
-					capabilities = capabilities,
-					on_attach = on_attach,
-				}
-			}
+			require("clangd_extensions").setup {}
 		end,
 	},
 

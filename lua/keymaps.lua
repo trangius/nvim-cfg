@@ -115,12 +115,6 @@ vim.keymap.set({"n", "v"}, 't', ':bnext<CR>', {noremap = true, silent = true})
 --------------------------------------------------------------------------
 -- TELESCOPE KEYMAPS
 --------------------------------------------------------------------------
-vim.keymap.set('n', '<space>fb', function()
-  require('telescope').extensions.file_browser.file_browser({
-    path = vim.fn.expand('%:p:h'),
-    select_buffer = true
-  })
-end, { noremap = true, silent = true, desc = 'Browser' })
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = 'Files' })
 vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Word' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Grep' })
@@ -197,7 +191,7 @@ vim.keymap.set('n', '<leader>di', dap.step_into, { noremap = true, silent = true
 vim.keymap.set('n', '<leader>du', dap.step_out, { noremap = true, silent = true, desc = 'Step out (C-u)' })
 
 -- Create a keymap to disconnect debugger and close DAP UI
-vim.keymap.set('n', '<leader>dq (C-q)', function()
+vim.keymap.set('n', '<leader>dq', function()
   require('dap').terminate()  -- Terminate the debugging session
   require('dapui').close()    -- Close the DAP UI
 end, { noremap = true, silent = true, desc = 'Quit debugger' })

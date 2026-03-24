@@ -26,17 +26,6 @@ local ignore_filetypes_list = {
     "%.mp3", "%.wav", "%.ogg", "%.flac", "%.mp4", "%.mkv", "%.mov", "%.avi", "%.wmv",
 }
 
-require('telescope').setup {
-	defaults = {
-		mappings = {
-			i = {
-				['<C-u>'] = false,
-				['<C-d>'] = false,
-			},
-		},
-        file_ignore_patterns = ignore_filetypes_list
-	},
-}
 -- Configure Telescope
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -49,6 +38,11 @@ require('telescope').setup {
 		},
         file_ignore_patterns = ignore_filetypes_list
 	},
+	extensions = {
+		file_browser = {
+			git_status = true,
+		},
+	},
 }
 
 -- Enable telescope fzf native, if installed on OS (otherwise, install it)
@@ -56,6 +50,12 @@ pcall(require('telescope').load_extension, 'fzf')
 
 -- load file browser extension for telescope
 require('telescope').load_extension('file_browser')
+
+-- Git status colors for telescope file browser (OneDark theme)
+vim.api.nvim_set_hl(0, "TelescopeResultsDiffChange", { fg = "#E5C07B" })   -- modified: orange/yellow
+vim.api.nvim_set_hl(0, "TelescopeResultsDiffAdd", { fg = "#98C379" })      -- added: green
+vim.api.nvim_set_hl(0, "TelescopeResultsDiffDelete", { fg = "#E06C75" })   -- deleted: red
+vim.api.nvim_set_hl(0, "TelescopeResultsDiffUntracked", { fg = "#C678DD" }) -- untracked: purple
 
 -- Highlight on yank
 -- See `:help vim.highlight.on_yank()`
@@ -84,7 +84,7 @@ end
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
--- for csharp_ls to install, we need dotnet installed
+-- for omnisharp to install, we need dotnet installed
 require('mason').setup()
 require('mason-lspconfig').setup({
     ensure_installed = { "lua_ls", "html", "omnisharp", "clangd" },
