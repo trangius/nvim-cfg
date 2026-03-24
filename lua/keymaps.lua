@@ -324,34 +324,8 @@ vim.keymap.set('x', 'l', function()
 end, { expr = true, noremap = true })
 
 -- Execute code
--- Execute code
-vim.keymap.set('n', '<leader>cx', function()
-  local file = vim.fn.expand('%:p')
-  local ext = vim.fn.expand('%:e')
-  local cmd
-  if ext == 'py' then
-    cmd = 'python3 ' .. file
-  elseif ext == 'c' then
-    local out = vim.fn.expand('%:p:r')
-    cmd = 'gcc ' .. file .. ' -o ' .. out .. ' && ' .. out
-  elseif #vim.fn.glob('*.csproj', false, true) > 0
-      or #vim.fn.glob('*.sln', false, true) > 0 then
-    cmd = 'dotnet run'
-  elseif ext == 'cs' then
-    cmd = 'dotnet run ' .. file
-  else
-    print('No runner for filetype: ' .. ext)
-    return
-  end
-  local tmpfile = '~/tmp/nvim_run_out.txt'
-  vim.fn.system('zsh -c "' .. cmd .. ' >' .. tmpfile .. ' 2>&1"')
-  if vim.v.shell_error ~= 0 then
-    local sr = vim.o.splitright
-    vim.o.splitright = true
-    vim.cmd('vsplit | terminal zsh -c "cat ' .. tmpfile .. '; echo \'--- press any key ---\'; read -q"')
-    vim.o.splitright = sr
-  end
-end, { noremap = true, silent = true, desc = 'Run file' })
+vim.keymap.set('n', '<F5>', functions.run_file, { noremap = true, silent = true, desc = 'Run file' })
+vim.keymap.set('n', '<leader>cx', functions.run_file, { noremap = true, silent = true, desc = 'Run file' })
 
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS
