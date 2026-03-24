@@ -142,6 +142,7 @@ vim.keymap.set('n', '<leader>,', function()
   require('telescope').extensions.file_browser.file_browser({
     hidden = true,
     respect_gitignore = false,
+    file_ignore_patterns = {},
     use_fd = false,
     cwd = '.',
   })
