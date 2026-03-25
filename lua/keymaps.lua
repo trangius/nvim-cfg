@@ -148,7 +148,7 @@ end, { desc = 'Browse files' })
 -- CODE KEYMAPS (requires LSP, telescope)
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>cd', require('telescope.builtin').lsp_definitions, { desc = 'Goto definition (gd)' })
-vim.keymap.set('n', '<leader>cr', require('telescope.builtin').lsp_references, { desc = 'Goto references (gr)' })
+vim.keymap.set('n', '<leader>cf', require('telescope.builtin').lsp_references, { desc = 'Goto references (gr)' })
 vim.keymap.set('n', '<leader>ci', require('telescope.builtin').lsp_implementations, { desc = 'Goto implementation (gi)' })
 vim.keymap.set('n', '<leader>ch', vim.lsp.buf.hover, { desc = 'Hover documentation (gh)' })
 vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help, { desc = 'Signature documentation (gk)' })
@@ -164,7 +164,8 @@ vim.keymap.set('n', '<leader>gn', vim.diagnostic.goto_next, { desc = 'Next messa
 vim.keymap.set('n', '<leader>gf', vim.diagnostic.open_float, { desc = 'Floating diagnostic message' })
 vim.keymap.set('n', '<leader>gl', vim.diagnostic.setloclist, { desc = 'List' })
 
-vim.keymap.set('n', '<leader>cn', vim.lsp.buf.rename, { desc = 'Rename symbol' })
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'rename symbol (f2)' })
+vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { desc = 'rename symbol (f2)' })
 
 -- Keymap to run :retab!
 vim.keymap.set('n', '<leader>ct', ':retab!<CR>', { desc = ':retab!' })
