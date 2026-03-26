@@ -128,7 +128,7 @@ function M.buffer_close_with_aerial()
 end
 
 -- Run the current file based on filetype (python, c, c#)
--- Opens a terminal split on error to show output
+-- Runs asynchronously and opens a terminal split on error to show output
 function M.run_file()
   local file = vim.fn.expand('%:p')
   local ext = vim.fn.expand('%:e')
@@ -147,14 +147,21 @@ function M.run_file()
     print('No runner for filetype: ' .. ext)
     return
   end
-  local tmpfile = '~/tmp/nvim_run_out.txt'
-  vim.fn.system('zsh -c "' .. cmd .. ' >' .. tmpfile .. ' 2>&1"')
-  if vim.v.shell_error ~= 0 then
-    local sr = vim.o.splitright
-    vim.o.splitright = true
-    vim.cmd('vsplit | terminal zsh -c "cat ' .. tmpfile .. '; echo \'--- press any key ---\'; read -q"')
-    vim.o.splitright = sr
-  end
+  local tmpfile = vim.fn.expand('~/tmp/nvim_run_out.txt')
+  local full_cmd = cmd .. ' >' .. tmpfile .. ' 2>&1'
+  print('Running: ' .. cmd)
+  vim.fn.jobstart({'zsh', '-c', full_cmd}, {
+    on_exit = function(_, exit_code)
+      vim.schedule(function()
+        if exit_code ~= 0 then
+          local lines = M.load_lines_from_file(tmpfile)
+          M.open_popup(lines, 0.6, 0.8)
+        else
+          print('Run finished successfully')
+        end
+      end)
+    end,
+  })
 end
 
 return M
