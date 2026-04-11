@@ -51,6 +51,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 
+vim.keymap.set({"n", "v"}, "K", "10k", { noremap = true })
 vim.keymap.set({"n", "v"}, "J", "10j", { noremap = true })
 vim.keymap.set({"n", "v", "o"}, "H", "^", { noremap = true })
 vim.keymap.set({"n", "v", "o"}, "L", "$", { noremap = true })
