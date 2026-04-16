@@ -39,13 +39,25 @@ require('options')
 require('keymaps')
 
 
-vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
-  pattern = {"*.c", "*.cpp", "*.h", "*.cs"},
+-- Always-on right-side chrome: aerial (symbol outline) + neo-tree (file tree).
+-- When launched with no file, land inside neo-tree so we can pick one.
+vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-    if vim.bo.filetype ~= "aerial" then
-      require('aerial').open({ focus = false })
+    require('aerial').open({ focus = false })
+    if vim.fn.argc() == 0 then
+      vim.cmd('Neotree focus')
+    else
+      vim.cmd('Neotree show')
     end
-  end
+  end,
+})
+
+-- Inside sidebar buffers, `:q` means "quit nvim" (not "close this sidebar").
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {"aerial", "neo-tree"},
+  callback = function()
+    vim.cmd("cabbrev <buffer> q qa")
+  end,
 })
 
 

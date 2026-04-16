@@ -23,17 +23,52 @@ require('lazy').setup({
 	{
 		"stevearc/aerial.nvim",
 		config = function()
+			local icon = function(hex) return vim.fn.nr2char(hex) end
 			require('aerial').setup({
                 focus_on_open = false,
                 close_automatic_events = {},
+                -- Default nerd icons ship with a trailing space AND render.lua
+                -- adds another space, creating a double gap. This table replaces
+                -- the defaults with trimmed Codicon glyphs — render's one space
+                -- is the only gap between icon and name. Swap any codepoint if
+                -- it shows as a box in FiraCode.
+                icons = {
+                    Array         = icon(0xea8a),
+                    Boolean       = icon(0xea8f),
+                    Class         = icon(0xeb5b),
+                    Constant      = icon(0xeb5d),
+                    Constructor   = icon(0xf0871),
+                    Enum          = icon(0xea95),
+                    EnumMember    = icon(0xeb5e),
+                    Event         = icon(0xea86),
+                    Field         = icon(0xeb5f),
+                    File          = icon(0xeaeb),
+                    Function      = icon(0xf0295),
+                    Interface     = icon(0xeb61),
+                    Key           = icon(0xeb62),
+                    Method        = icon(0xf0295),
+                    Module        = icon(0xf0573),
+                    Namespace     = icon(0xea8b),
+                    Null          = icon(0xea86),
+                    Number        = icon(0xea93),
+                    Object        = icon(0xea8b),
+                    Operator      = icon(0xeb64),
+                    Package       = icon(0xeb29),
+                    Property      = icon(0xeb65),
+                    String        = icon(0xeb8d),
+                    Struct        = icon(0xea91),
+                    TypeParameter = icon(0xea92),
+                    Variable      = icon(0xea88),
+                    Collapsed     = icon(0xeab6),
+                },
                 layout = {
                     -- These control the width of the aerial window.
                     -- They can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
                     -- min_width and max_width can be a list of mixed types.
                     -- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
-                    max_width = 25,
-                    width = 25,
-                    min_width = 25,
+                    max_width = 20,
+                    width = 20,
+                    min_width = 20,
 
                     -- key-value pairs of window-local options for aerial window (e.g. winhl)
                     win_opts = {},
@@ -42,12 +77,14 @@ require('lazy').setup({
                     -- options will open the window in the other direction *if* there is a
                     -- different buffer in the way of the preferred direction
                     -- Enum: prefer_right, prefer_left, right, left, float
-                    default_direction = "prefer_right",
+                    -- Force "right" (not prefer_right) so neo-tree on the right doesn't
+                    -- make aerial fall back to the left.
+                    default_direction = "right",
 
                     -- Determines where the aerial window will be opened
                     --   edge   - open aerial at the far right/left of the editor
                     --   window - open aerial to the right/left of the current window
-                    placement = "edge",
+                    placement = "window",
 
                     -- When the symbols change, resize the aerial window (within min/max constraints) to fit
                     resize_to_content = false,
@@ -59,6 +96,35 @@ require('lazy').setup({
 
 			-- require('aerial').open() --TODO: this one breaks tabstop and sets it to 8 always. can this be fixed?
 		end
+	},
+
+	-- Persistent project file tree on the far-right edge
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
+		},
+		config = function()
+			require("neo-tree").setup({
+				close_if_last_window = true,
+				-- Never open files into these window types; without "aerial"
+				-- here, neo-tree would sometimes replace the aerial sidebar
+				-- with the opened file.
+				open_files_do_not_replace_types = { "terminal", "trouble", "qf", "aerial" },
+				window = {
+					position = "right",
+					width = 28,
+				},
+				filesystem = {
+					follow_current_file = { enabled = true },
+					use_libuv_file_watcher = true,
+					hijack_netrw_behavior = "disabled",
+				},
+			})
+		end,
 	},
 
 {

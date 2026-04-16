@@ -233,11 +233,24 @@ end, { desc = 'Quit debugger' })
 --------------------------------------------------------------------------
 -- AERIAL KEYMAPS
 --------------------------------------------------------------------------
-vim.keymap.set({'n', 'v', 'i'}, '<A-a>', function()
-  require('aerial').toggle({ focus = false })
-end, { desc = 'Aerial toggle without focus' })
+vim.keymap.set({'n', 'v'}, '<leader>a', function()
+  local aerial = require('aerial')
+  if vim.bo.filetype == 'aerial' then return end
+  if aerial.is_open() then
+    aerial.focus()
+  else
+    aerial.open({ focus = true })
+  end
+end, { desc = 'Open/focus aerial (symbol outline)' })
 vim.keymap.set({'n', 'v', 'i'}, '<C-j>', function() require('aerial').next() end, { desc = 'Aerial next' })
 vim.keymap.set({'n', 'v', 'i'}, '<C-k>', function() require('aerial').prev() end, { desc = 'Aerial previous' })
+
+
+--------------------------------------------------------------------------
+-- NEO-TREE KEYMAPS
+--------------------------------------------------------------------------
+vim.keymap.set('n', '<leader>e', '<cmd>Neotree focus<CR>', { desc = 'Focus file tree' })
+vim.keymap.set('n', '<leader>fl', '<cmd>Neotree reveal<CR>', { desc = 'Reveal current file in tree' })
 
 
 --------------------------------------------------------------------------
