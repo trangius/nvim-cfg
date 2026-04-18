@@ -211,7 +211,17 @@ require('lazy').setup({
 							['<C-d>'] = false,
 						},
 					},
-			        file_ignore_patterns = ignore_filetypes_list
+					file_ignore_patterns = ignore_filetypes_list,
+					-- Bigger picker, preview takes most of the space.
+					layout_strategy = 'horizontal',
+					layout_config = {
+						horizontal = {
+							width = 0.9,
+							height = 0.9,
+							preview_width = 0.58,
+							preview_cutoff = 80,
+						},
+					},
 				},
 				extensions = {
 					file_browser = {
