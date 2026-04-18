@@ -37,6 +37,7 @@ function M.open_popup(lines, width_pct, height_pct)
 	table.insert(border_lines, "╚" .. string.rep("═", win_width) .. "╝")
 	vim.api.nvim_buf_set_lines(border_buf, 0, -1, false, border_lines)
 	local border_win = vim.api.nvim_open_win(border_buf, false, border_opts)
+	vim.wo[border_win].winhighlight = 'Normal:Normal,NormalFloat:Normal'
 
 	-- configure the popup window
 	local opts = {
@@ -49,6 +50,7 @@ function M.open_popup(lines, width_pct, height_pct)
 	}
 	local win = vim.api.nvim_open_win(buf, true, opts)
 	vim.wo[win].cursorline = true
+	vim.wo[win].winhighlight = 'Normal:Normal,NormalFloat:Normal'
 	vim.bo[buf].buftype = 'nofile'
 	vim.bo[buf].bufhidden = 'hide'
 	vim.bo[buf].swapfile = false

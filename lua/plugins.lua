@@ -274,6 +274,26 @@ require('lazy').setup({
 		cmd = "Trouble",
 	},
 
+	-- Project-wide find/replace with live preview. Lives in a single buffer:
+	-- top has Search/Replace/Files/Flags fields, below shows ripgrep matches
+	-- that you can edit inline or apply across all files.
+	{
+		"MagicDuck/grug-far.nvim",
+		cmd = "GrugFar",
+		config = function()
+			require('grug-far').setup({})
+			-- Clear bg on the grug-far hl groups that ship with a hardcoded
+			-- gray bg — they render as visible bars on our dark popup.
+			for _, g in ipairs({
+				'GrugFarResultsPath', 'GrugFarResultsHeader',
+				'GrugFarResultsStats', 'GrugFarHelpHeader',
+				'GrugFarHelpHeaderCount',
+			}) do
+				vim.api.nvim_set_hl(0, g, { bg = 'NONE' })
+			end
+		end,
+	},
+
 	---------------------------------------------------------------
 	-- GIT PLUGINS
 	---------------------------------------------------------------

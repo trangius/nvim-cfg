@@ -89,6 +89,8 @@ local normal_mappings = {
     { "<leader>p_", hidden = true },
     { "<leader>l", group = "Latex" },
     { "<leader>l_", hidden = true },
+    { "<leader>s", group = "Search/Replace" },
+    { "<leader>s_", hidden = true },
     -- Standalone leader keys (labels just for the which-key popup)
     { "<leader>a",        desc = "Focus aerial (symbol outline)" },
     { "<leader>e",        desc = "Focus file tree" },
@@ -254,6 +256,65 @@ vim.keymap.set('n', '<leader>e', '<cmd>Neotree focus<CR>', { desc = 'Focus file 
 vim.keymap.set('n', '<leader>fl', '<cmd>Neotree reveal<CR>', { desc = 'Reveal current file in tree' })
 
 
+
+
+--------------------------------------------------------------------------
+-- GRUG-FAR KEYMAPS (project-wide search & replace, in a floating popup)
+--------------------------------------------------------------------------
+local function grug_far_float(opts)
+  opts = opts or {}
+  -- Match the help popup (0.6 x 0.8 of editor).
+  local width  = math.ceil(vim.o.columns * 0.6)
+  local height = math.ceil(vim.o.lines * 0.8)
+  local row    = math.ceil((vim.o.lines - height) / 2)
+  local col    = math.ceil((vim.o.columns - width) / 2)
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width, height = height,
+    row = row, col = col,
+    border = 'rounded',
+    style = 'minimal',
+  })
+
+  require('grug-far').open(vim.tbl_extend('force', opts, {
+    windowCreationCommand = 'enew',
+    transient = true,
+  }))
+
+  -- Reserve the signcolumn so grug-far's diff markers don't shift the
+  -- whole buffer right by 2 columns the moment you type into Replace.
+  vim.wo[win].signcolumn = 'yes'
+
+  -- Force every peripheral ui element in the popup to the editor's Normal
+  -- bg. Covers the sign column, fold column, line nr, status line, and the
+  -- float's own Normal/NormalFloat — so the popup is one uniform color.
+  vim.wo[win].winhighlight = table.concat({
+    'Normal:Normal', 'NormalFloat:Normal', 'NormalNC:Normal',
+    'SignColumn:Normal', 'FoldColumn:Normal', 'LineNr:Normal',
+    'StatusLine:Normal', 'StatusLineNC:Normal',
+    'CursorLine:Normal', 'EndOfBuffer:Normal',
+  }, ',')
+
+  -- ESC in normal mode closes the whole popup
+  vim.keymap.set('n', '<Esc>', function()
+    if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end
+  end, { buffer = 0, silent = true })
+end
+
+vim.keymap.set('n', '<leader>sr', function() grug_far_float() end,
+  { desc = 'Search/Replace in project' })
+vim.keymap.set('n', '<leader>sw', function()
+  grug_far_float({ prefills = { search = vim.fn.expand('<cword>') } })
+end, { desc = 'Search/Replace word under cursor' })
+vim.keymap.set('v', '<leader>sr', function()
+  local saved = vim.fn.getreg('"')
+  vim.cmd('noautocmd normal! y')
+  local selection = vim.fn.getreg('"')
+  vim.fn.setreg('"', saved)
+  grug_far_float({ prefills = { search = selection } })
+end, { desc = 'Search/Replace visual selection' })
 
 
 --------------------------------------------------------------------------
