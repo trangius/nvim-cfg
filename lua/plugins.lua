@@ -154,8 +154,8 @@ require('lazy').setup({
 	  'buffers',
 	  symbols = { alternate_file = '' },
 	  buffers_color = {
-	            active = { fg = '#e5e9f0', bg = '#3b4252' },  -- Ljusgrå text på mörkgrå bakgrund för aktiv buffer
-	            inactive = { fg = '#4c566a', bg = '#2e3440' },  -- Mörkare grå text på mörkare bakgrund för inaktiv buffer
+	            active = { fg = '#e5e9f0', bg = '#3b4252' },
+	            inactive = { fg = '#4c566a', bg = '#2e3440' },
 	  },
 	}
 	      },
@@ -252,11 +252,8 @@ require('lazy').setup({
 
 	{
 		'phaazon/hop.nvim',
-		branch = 'v2', -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-		end
+		branch = 'v2',
+		opts = { keys = 'etovxqpdygfblzhckisuran' },
 	},
 
 
@@ -528,9 +525,8 @@ require('lazy').setup({
     {
         "zbirenbaum/copilot-cmp",
         dependencies = { "zbirenbaum/copilot.lua" },
-        config = function()
-            require("copilot_cmp").setup()
-        end
+        main = "copilot_cmp",
+        opts = {},
     },
 
 
@@ -616,9 +612,7 @@ require('lazy').setup({
 
 	{
 		'p00f/clangd_extensions.nvim',
-		config = function()
-			require("clangd_extensions").setup {}
-		end,
+		opts = {},
 	},
 
 
@@ -636,12 +630,8 @@ require('lazy').setup({
 		  },
 		},
 		{
-		  "Weissle/persistent-breakpoints.nvim",  -- Persistent breakpoints plugin
-		  config = function()
-			require("persistent-breakpoints").setup{
-			  load_breakpoints_event = { "BufReadPost" },  -- Load breakpoints when opening files
-			}
-		  end,
+		  "Weissle/persistent-breakpoints.nvim",
+		  opts = { load_breakpoints_event = { "BufReadPost" } },
 		},
 	  },
 	  config = function()
