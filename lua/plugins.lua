@@ -16,26 +16,6 @@ require('lazy').setup({
 	-- File icons (used by telescope, lualine, etc.)
 	'nvim-tree/nvim-web-devicons',
 
-	-- Nice scrollbar
-	{
-		'petertriho/nvim-scrollbar',
-		config = function()
-			require("scrollbar").setup({
-				handle = {
-					color = '#5c6370', -- Adjust to match onedark's scrollbar handle color
-				},
-				marks = {
-					Search = { color = '#98c379' }, -- Adjust to match onedark's search highlight color
-			--		Warn = { color = '#e5c07b' }, -- Adjust to match onedark's warning color
-					Error = { color = '#e06c75' },  -- Adjust to match onedark's error color
-					Info = { color = '#56b6c2' },   -- Adjust to match onedark's info color
-					Hint = { color = '#c678dd' },   -- Adjust to match onedark's hint color
-					Misc = { color = '#56b6c2' },   -- Adjust to match onedark's misc (like git changes) color
-				},
-			})
-		end,
-	},
-
 	-- a sidebar with class/function list to step trough
 	{
 		"stevearc/aerial.nvim",

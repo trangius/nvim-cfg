@@ -21,6 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 require('plugins')
 require('options')
 require('keymaps')
+require('scrollbar').setup()
 
 -- Copy :messages output to the system clipboard.
 vim.api.nvim_create_user_command("CopyMessages", function()
