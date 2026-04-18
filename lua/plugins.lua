@@ -487,46 +487,36 @@ require('lazy').setup({
 						end
 					end, { 'i', 's' }),
 
-			        -- Ctrl-L for Copilot suggestion
-			        ['<C-l>'] = cmp.mapping(function(fallback)
-			            cmp.complete({
-			                config = {
-			                    sources = {
-			                        { name = 'copilot' }
-			                    }
-			                }
-			            })
-			        end, { 'i', 's' }),
-
 				},
 				sources = {
 					{ name = "nvim_lsp", group_index = 1 },
-					{ name = "path", group_index = 2 },
-					{ name = "luasnip", group_index = 2 },
-					{ name = "copilot", group_index = 3 },
+					{ name = "luasnip",  group_index = 2 },
+					{ name = "path",     group_index = 2 },
 				},
 			}
 		end,
 	},
 
-	-- Github Copilot, we need node.js for this -> "brew install node"
+	-- GitHub Copilot. Needs node.js -> "brew install node".
+	-- Ghost-text mode: suggestion appears inline as grey text, <Tab> accepts.
     {
         "zbirenbaum/copilot.lua",
         event = "VimEnter",
-        config = function()
-            vim.defer_fn(function()
-                require("copilot").setup({
-                    suggestion = { enabled = false },
-                    panel = { enabled = false },
-                })
-            end, 30) -- delay to make sure everything loads correctly
-        end,
-    },
-    {
-        "zbirenbaum/copilot-cmp",
-        dependencies = { "zbirenbaum/copilot.lua" },
-        main = "copilot_cmp",
-        opts = {},
+        opts = {
+            panel = { enabled = false },
+            suggestion = {
+                enabled = true,
+                auto_trigger = true,
+                keymap = {
+                    accept = "<Tab>",
+                    accept_word = false,
+                    accept_line = false,
+                    next = "<A-]>",
+                    prev = "<A-[>",
+                    dismiss = "<C-]>",
+                },
+            },
+        },
     },
 
 

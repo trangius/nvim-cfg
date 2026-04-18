@@ -39,6 +39,12 @@ gnn / grn:  Init / grow selection
 grc:        Grow to scope
 grm:        Shrink selection
 
+---- Copilot (ghost text) ----
+Tab:        Accept suggestion
+Alt-]:      Next suggestion
+Alt-[:      Previous suggestion
+Ctrl-]:     Dismiss suggestion
+
 ---- Macros ----
 qx:         Start recording macro on x
 q:          Stop recording
