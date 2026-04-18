@@ -44,6 +44,10 @@ require('lazy').setup({
 			require('aerial').setup({
                 focus_on_open = false,
                 close_automatic_events = {},
+                -- Auto-open aerial only when the buffer has a working backend
+                -- (treesitter/LSP/markdown symbols). Empty buffer or plain text
+                -- files don't spawn an empty outline.
+                open_automatic = true,
                 -- Default nerd icons ship with a trailing space AND render.lua
                 -- adds another space, creating a double gap. This table replaces
                 -- the defaults with trimmed Codicon glyphs — render's one space
@@ -139,11 +143,11 @@ require('lazy').setup({
 				},
 			})
 
-			-- Always-on right-side chrome: aerial + neo-tree on startup.
+			-- Neo-tree always opens on startup; aerial is handled by its own
+			-- open_automatic config and only shows up for supported buffers.
 			-- When launched with no file, land inside neo-tree so we can pick one.
 			vim.api.nvim_create_autocmd("VimEnter", {
 				callback = function()
-					require('aerial').open({ focus = false })
 					if vim.fn.argc() == 0 then
 						vim.cmd('Neotree focus')
 					else
