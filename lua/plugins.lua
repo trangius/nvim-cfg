@@ -24,6 +24,9 @@ require('lazy').setup({
 			require('aerial').setup({
                 focus_on_open = false,
                 close_automatic_events = {},
+                keymaps = {
+                    ["<Esc>"] = { callback = function() vim.cmd("wincmd p") end, desc = "Return to editor window" },
+                },
                 -- Auto-open aerial only when the buffer has a working backend
                 -- (treesitter/LSP/markdown symbols). Empty buffer or plain text
                 -- files don't spawn an empty outline.
@@ -115,6 +118,9 @@ require('lazy').setup({
 				window = {
 					position = "right",
 					width = 28,
+					mappings = {
+						["<esc>"] = function() vim.cmd("wincmd p") end,
+					},
 				},
 				filesystem = {
 					follow_current_file = { enabled = true },
