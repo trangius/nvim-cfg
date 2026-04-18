@@ -55,8 +55,19 @@ vim.o.wildignore = '*.o,*.rej,*.so'
 vim.o.showmode = false
 
 
--- Undotree takes up half the screen
-vim.g.undotree_SplitWidth = math.ceil(vim.o.columns / 2)
+-- Undotree: layout 2 puts the diff along the bottom, and the autocmd below
+-- moves the tree panel itself to the bottom too (undotree has no native
+-- "horizontal" layout, so we relocate the window post-open).
+vim.g.undotree_WindowLayout = 2
+vim.g.undotree_DiffpanelHeight = 10
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'undotree',
+  callback = function()
+    vim.cmd('wincmd J')
+    vim.cmd('resize 14')
+  end,
+})
 
 -- Prompt to save on :q with unsaved changes instead of erroring
 vim.o.confirm = true
