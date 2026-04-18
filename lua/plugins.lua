@@ -125,9 +125,8 @@ require('lazy').setup({
 		config = function()
 			require("neo-tree").setup({
 				close_if_last_window = false,
-				-- Never open files into these window types; without "aerial"
-				-- here, neo-tree would sometimes replace the aerial sidebar
-				-- with the opened file.
+				-- Never open files into these window types; keeps aerial as a
+				-- visible sidebar instead of getting replaced by the picked file.
 				open_files_do_not_replace_types = { "terminal", "trouble", "qf", "aerial" },
 				window = {
 					position = "right",
@@ -140,7 +139,7 @@ require('lazy').setup({
 				},
 			})
 
-			-- Always-on right-side chrome: aerial (symbol outline) + neo-tree (file tree).
+			-- Always-on right-side chrome: aerial + neo-tree on startup.
 			-- When launched with no file, land inside neo-tree so we can pick one.
 			vim.api.nvim_create_autocmd("VimEnter", {
 				callback = function()
@@ -269,6 +268,14 @@ require('lazy').setup({
 
 	-- Undo tree visualizer
 	'mbbill/undotree',
+
+	-- Pretty diagnostics / quickfix / LSP list panel
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
+		cmd = "Trouble",
+	},
 
 	---------------------------------------------------------------
 	-- GIT PLUGINS

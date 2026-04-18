@@ -90,9 +90,10 @@ local normal_mappings = {
     { "<leader>l", group = "Latex" },
     { "<leader>l_", hidden = true },
     -- Standalone leader keys (labels just for the which-key popup)
-    { "<leader>a",        desc = "Aerial (symbol outline)" },
+    { "<leader>a",        desc = "Focus aerial (symbol outline)" },
     { "<leader>e",        desc = "Focus file tree" },
     { "<leader>h",        desc = "Help / tips" },
+    { "<leader>q",        desc = "Smart quit (all)" },
     { "<leader>t",        desc = "Terminal here" },
     { "<leader>r",        desc = "Reload config" },
     { "<leader>/",        desc = "Buffer fuzzy search" },
@@ -176,6 +177,7 @@ vim.keymap.set('n', '<leader>gp', vim.diagnostic.goto_prev, { desc = 'Previous m
 vim.keymap.set('n', '<leader>gn', vim.diagnostic.goto_next, { desc = 'Next message' })
 vim.keymap.set('n', '<leader>gf', vim.diagnostic.open_float, { desc = 'Floating diagnostic message' })
 vim.keymap.set('n', '<leader>gl', vim.diagnostic.setloclist, { desc = 'List' })
+vim.keymap.set('n', '<leader>gt', '<cmd>Trouble diagnostics toggle<CR>', { desc = 'Toggle trouble panel' })
 
 -- workspace stuff, would we ever care about this?
 --vim.keymap.set('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'Symbols' })
@@ -233,14 +235,14 @@ conditional_keymap('n', '<C-q>',      quit_debugger,  { desc = 'Quit debugger' }
 -- AERIAL KEYMAPS
 --------------------------------------------------------------------------
 vim.keymap.set({'n', 'v'}, '<leader>a', function()
-  local aerial = require('aerial')
-  if vim.bo.filetype == 'aerial' then return end
-  if aerial.is_open() then
-    aerial.focus()
-  else
-    aerial.open({ focus = true })
+  for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.bo[vim.api.nvim_win_get_buf(w)].filetype == 'aerial' then
+      vim.api.nvim_set_current_win(w)
+      return
+    end
   end
-end, { desc = 'Open/focus aerial (symbol outline)' })
+  require('aerial').open({ focus = true })
+end, { desc = 'Focus aerial (open if needed)' })
 vim.keymap.set({'n', 'v', 'i'}, '<C-j>', function() require('aerial').next() end, { desc = 'Aerial next' })
 vim.keymap.set({'n', 'v', 'i'}, '<C-k>', function() require('aerial').prev() end, { desc = 'Aerial previous' })
 
@@ -248,7 +250,7 @@ vim.keymap.set({'n', 'v', 'i'}, '<C-k>', function() require('aerial').prev() end
 --------------------------------------------------------------------------
 -- NEO-TREE KEYMAPS
 --------------------------------------------------------------------------
-vim.keymap.set('n', '<leader>e', '<cmd>Neotree focus<CR>', { desc = 'Focus file tree' })
+vim.keymap.set('n', '<leader>e', '<cmd>Neotree focus<CR>', { desc = 'Focus file tree (open if needed)' })
 vim.keymap.set('n', '<leader>fl', '<cmd>Neotree reveal<CR>', { desc = 'Reveal current file in tree' })
 
 
@@ -303,6 +305,7 @@ end, { desc = 'Convert C# to Python-style syntax' })
 -- MISC FUNCTIONS (defined in functions.lua or here directley) KEYMAPS
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>h', require('functions').open_myhelp_popup, { noremap = true, silent = true, desc = 'Help/Tips' })
+vim.keymap.set('n', '<leader>q', require('functions').smart_quit, { noremap = true, silent = true, desc = 'Smart quit (all)' })
 vim.keymap.set('n', '<leader>t', require('functions').terminal_here, { noremap = true, silent = true, desc = 'Terminal here' })
 vim.keymap.set('t', '<C-q>', require('functions').terminal_close, { noremap = true, silent = true, desc = 'Close terminal split' })
 
@@ -345,9 +348,6 @@ vim.keymap.set('n', '<leader>cx', functions.run_file, { noremap = true, silent =
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS
 --------------------------------------------------------------------------
--- Note: do NOT alias Q → q or Q! → q!. `:Q` is a real user command in
--- init.lua that handles :q properly in the aerial+neo-tree setup, and the
--- q → Q cnoreabbrev there relies on Q staying Q on its way to the command.
 vim.cmd([[
     cnoreabbrev W! w!
     cnoreabbrev W1 w!

@@ -127,6 +127,39 @@ function M.buffer_close_with_aerial()
   end
 end
 
+-- Close everything. If any buffers have unsaved changes, show a dialog
+-- listing them with options to save all + quit, discard + quit, or cancel.
+function M.smart_quit()
+  local modified = {}
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(b)
+        and vim.bo[b].modified
+        and vim.bo[b].buftype == ""
+    then
+      local name = vim.api.nvim_buf_get_name(b)
+      table.insert(modified, name ~= "" and vim.fn.fnamemodify(name, ":~:.") or "[No Name]")
+    end
+  end
+
+  if #modified == 0 then
+    vim.cmd("qa")
+    return
+  end
+
+  local msg = ("%d unsaved file%s:\n  %s"):format(
+    #modified,
+    #modified == 1 and "" or "s",
+    table.concat(modified, "\n  ")
+  )
+  local choice = vim.fn.confirm(msg, "&Save all && quit\n&Discard && quit\n&Cancel", 3)
+  if choice == 1 then
+    vim.cmd("silent! wa")
+    vim.cmd("qa!")
+  elseif choice == 2 then
+    vim.cmd("qa!")
+  end
+end
+
 -- Run the current file based on filetype (python, c, c#)
 -- Runs asynchronously and opens a terminal split on error to show output
 function M.run_file()
