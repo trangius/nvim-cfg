@@ -344,115 +344,67 @@ require('lazy').setup({
 			'folke/neodev.nvim',
 		},
 		config = function()
-			-- This function gets run when an LSP connects to a particular buffer.
-			local on_attach = function(_, bufnr)
-				-- Create a command `:Format` local to the LSP buffer
+			-- Shared on_attach: adds the `:Format` command and wires auto
+			-- signature help on the server's trigger characters (typically "(" and ",").
+			local on_attach = function(client, bufnr)
 				vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
 					vim.lsp.buf.format()
 				end, { desc = 'format current buffer with LSP' })
+
+				local triggers = client
+				  and vim.tbl_get(client.server_capabilities or {}, 'signatureHelpProvider', 'triggerCharacters')
+				if triggers and not vim.tbl_isempty(triggers) then
+				  vim.api.nvim_create_autocmd('TextChangedI', {
+				    buffer = bufnr,
+				    callback = function()
+				      local col = vim.api.nvim_win_get_cursor(0)[2]
+				      if col == 0 then return end
+				      local ch = vim.api.nvim_get_current_line():sub(col, col)
+				      if vim.tbl_contains(triggers, ch) then
+				        vim.lsp.buf.signature_help()
+				      end
+				    end,
+				  })
+				end
 			end
 
-			-- mason-lspconfig requires that these setup functions are called in this order
-			-- before setting up the servers.
-			-- for omnisharp to install, we need dotnet installed
-			require('mason').setup()
-			require('mason-lspconfig').setup({
-			    ensure_installed = { "lua_ls", "html", "omnisharp", "clangd" },
-			    automatic_installation = true,
-			})
-
-			-- Enable the following language servers
-			local servers = {
-				 clangd = {},
-				-- gopls = {},
-				-- pyright = {},
-				-- rust_analyzer = {},
-				-- tsserver = {}
-			    omnisharp = {},
-				html = { filetypes = { 'html', 'twig', 'hbs' } },
-				lua_ls = {
-					Lua = {
-						workspace = { checkThirdParty = false },
-						telemetry = { enable = false },
-					},
-				},
-			}
-
-			-- === NEW LSP SETUP (Nvim 0.11+) ===
 			-- nvim-cmp capabilities
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			pcall(function()
 			  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 			end)
 
-			-- Use a single LspAttach autocmd for formatting
-			vim.api.nvim_create_autocmd("LspAttach", {
+			require('neodev').setup()
+			require('mason').setup()
+
+			-- LspAttach: run on_attach for every client. Works regardless of
+			-- how the server was started (vim.lsp.enable / automatic_enable / manual).
+			vim.api.nvim_create_autocmd('LspAttach', {
 			  callback = function(args)
-			    local bufnr = args.buf
-			    -- keep your on_attach Format command available
-			    pcall(on_attach, nil, bufnr)
-
-			    -- Auto-trigger signature help in insert mode on the server's trigger
-			    -- characters (typically "(" and ","). Replaces the old `gs`/`<leader>cs`
-			    -- mappings which only worked in normal mode, where they're useless.
 			    local client = vim.lsp.get_client_by_id(args.data.client_id)
-			    local triggers = client
-			      and vim.tbl_get(client.server_capabilities or {}, 'signatureHelpProvider', 'triggerCharacters')
-			    if triggers and not vim.tbl_isempty(triggers) then
-			      vim.api.nvim_create_autocmd('TextChangedI', {
-			        buffer = bufnr,
-			        callback = function()
-			          local col = vim.api.nvim_win_get_cursor(0)[2]
-			          if col == 0 then return end
-			          local ch = vim.api.nvim_get_current_line():sub(col, col)
-			          if vim.tbl_contains(triggers, ch) then
-			            vim.lsp.buf.signature_help()
-			          end
-			        end,
-			      })
+			    if client then
+			      on_attach(client, args.buf)
 			    end
 			  end,
 			})
 
-			-- Define per-server configs using the new API
-			vim.lsp.config('clangd', {
-			  capabilities = capabilities,
-			})
+			-- Omnisharp occasionally emits malformed RPC frames. Nvim's RPC layer
+			-- logs these via vim.notify BEFORE any user on_error fires, so the
+			-- only reliable silencer is a notify filter for this specific noise.
+			local orig_notify = vim.notify
+			vim.notify = function(msg, level, opts)
+			  if type(msg) == 'string'
+			    and msg:find('omnisharp', 1, true)
+			    and msg:find('INVALID_SERVER_MESSAGE', 1, true) then
+			    return
+			  end
+			  return orig_notify(msg, level, opts)
+			end
 
-			vim.lsp.config('omnisharp', {
-			  capabilities = capabilities,
-			  handlers = {
-			    -- Slå av spamloggar
-			    ["window/logMessage"] = function() end,
-			    -- Visa bara fel, ignorera INFO/WARN
-			    ["window/showMessage"] = function(_, result, ctx)
-			      local mt = vim.lsp.protocol.MessageType
-			      if result.type == mt.Error then
-			        return vim.lsp.handlers["window/showMessage"](_, result, ctx)
-			      end
-			      -- annars: tyst
-			    end,
-			  },
-			  -- Omnisharp occasionally emits malformed RPC messages; LSP
-			  -- flags them as INVALID_SERVER_MESSAGE. Server keeps running,
-			  -- so the error is just noise. Swallow only that specific code.
-			  on_error = function(code, err)
-			    if code == vim.lsp.client_errors.INVALID_SERVER_MESSAGE then
-			      return
-			    end
-			    vim.notify(
-			      ("LSP[omnisharp]: %s"):format(vim.inspect(err)),
-			      vim.log.levels.ERROR
-			    )
-			  end,
-			})
-
-			vim.lsp.config('html', {
-			  capabilities = capabilities,
-			  filetypes = { 'html', 'twig', 'hbs' },
-			})
-
-			vim.lsp.config('lua_ls', {
+			-- Per-server configs via the new API (nvim 0.11+).
+			vim.lsp.config('clangd',    { capabilities = capabilities })
+			vim.lsp.config('html',      { capabilities = capabilities, filetypes = { 'html', 'twig', 'hbs' } })
+			vim.lsp.config('lua_ls',    {
 			  capabilities = capabilities,
 			  settings = {
 			    Lua = {
@@ -462,17 +414,23 @@ require('lazy').setup({
 			    },
 			  },
 			})
+			vim.lsp.config('omnisharp', {
+			  capabilities = capabilities,
+			  handlers = {
+			    ['window/logMessage'] = function() end,
+			    ['window/showMessage'] = function(_, result, ctx)
+			      if result.type == vim.lsp.protocol.MessageType.Error then
+			        return vim.lsp.handlers['window/showMessage'](_, result, ctx)
+			      end
+			    end,
+			  },
+			})
 
-			-- Setup neovim lua configuration
-			require('neodev').setup()
-
-			-- Ensure the servers above are installed
-			local mason_lspconfig = require 'mason-lspconfig'
-
-			mason_lspconfig.setup {
-				ensure_installed = vim.tbl_keys(servers),
+			require('mason-lspconfig').setup({
+			  ensure_installed = { 'lua_ls', 'html', 'omnisharp', 'clangd' },
+			  automatic_installation = true,
 			  automatic_enable = true,
-			}
+			})
 		end,
 	},
 
