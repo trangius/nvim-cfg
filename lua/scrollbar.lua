@@ -222,7 +222,7 @@ end
 -- new row, viewport still at old range" and we flash a frame where the
 -- cursor mark sits outside the thumb. With debouncing, rapid events collapse
 -- to one render at the final settled state.
-local timer = vim.loop.new_timer()
+local timer = vim.uv.new_timer()
 local function schedule_update()
   timer:stop()
   timer:start(10, 0, vim.schedule_wrap(update))

@@ -338,7 +338,7 @@ require('lazy').setup({
 
 			-- Useful status updates for LSP
 			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-			{ 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+			{ 'j-hui/fidget.nvim', opts = {} },
 
 			-- Additional lua configuration, makes nvim stuff amazing!
 			'folke/neodev.nvim',
@@ -569,7 +569,7 @@ require('lazy').setup({
     },
     {
         "zbirenbaum/copilot-cmp",
-        after = "copilot.lua",
+        dependencies = { "zbirenbaum/copilot.lua" },
         config = function()
             require("copilot_cmp").setup()
         end
@@ -610,10 +610,10 @@ require('lazy').setup({
 					incremental_selection = {
 						enable = true,
 						keymaps = {
-							init_selection = '<c-space>',
-							node_incremental = '<c-space>',
-							scope_incremental = '<c-s>',
-							node_decremental = '<M-space>',
+							init_selection = 'gnn',
+							node_incremental = 'grn',
+							scope_incremental = 'grc',
+							node_decremental = 'grm',
 						},
 					},
 					textobjects = {

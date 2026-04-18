@@ -1,34 +1,45 @@
 ---- Navigation ----
-Ctrl-o:     Hop to
+Ctrl-h:     Hop to char
+K / J:      Jump 10 lines up / down
+H / L:      Line start / end
 
 ---- Code -----
 gd          Go to definition
 gr          Go to references
-gi:         Go to implementation
-go:         Show hover documentation
-gs:         Show signature documentation
+gi          Go to implementation
+go          Show hover documentation
+(signature help auto-triggers on ( and ,)
 
-Aeral
-Alt-a:      Toggle navigation view
-Alt-j:      Go to next navigation symbol
-Alt-k:      Go to previous navigation symbol
+Aerial (symbol outline)
+<leader>a:  Focus aerial (open if needed)
+Ctrl-j:     Next symbol
+Ctrl-k:     Previous symbol
 
 ---- Buffer Management ----
 Ctrl-x:     Close buffer
-Alt-h:      Go to previous buffer
-Alt-l:      Go to next buffer
-g+h/j/k/l:  Move to split buffer
+t / T:      Next / previous buffer
+gh/j/k/l:   Move to split (left/down/up/right)
+Alt-C-h/j/k/l: Resize splits
 
 ---- Search ----
 Ctrl-f:     Fuzzy search in current buffer
 Ctrl-b:     Find existing buffers
-Ctrl-p:     Search/replace with Spectre
+<leader>ff: Find files           <leader>fg: Live grep
+<leader>fs: Grep string          <leader>fr: Recent files
+<leader>fd: Diagnostics          <leader>fe: Resume last
+<leader>ft: Git files            <leader>fb: Buffers
+<leader>fl: Reveal current file in Neo-tree
 
-:%s/foo/bar/g: replace all in whole file
-:%s/foo/bar/gc: replace all with confirmation.
--> using ctrl-r+" will paste current register
+:%s/foo/bar/g   replace all in whole file
+:%s/foo/bar/gc  replace all with confirmation
+-> ctrl-r+" pastes current register
+
+---- Treesitter incremental selection ----
+gnn / grn:  Init / grow selection
+grc:        Grow to scope
+grm:        Shrink selection
 
 ---- Macros ----
-qx:         Start recording macro on x, then:
-q:          Stop recording, then
-@x or @@:   To run macro x or last run
+qx:         Start recording macro on x
+q:          Stop recording
+@x / @@:    Run macro x / last run
