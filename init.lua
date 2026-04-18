@@ -21,3 +21,9 @@ vim.opt.rtp:prepend(lazypath)
 require('plugins')
 require('options')
 require('keymaps')
+
+-- Copy :messages output to the system clipboard.
+vim.api.nvim_create_user_command("CopyMessages", function()
+  vim.cmd("redir @+ | silent messages | redir END")
+  vim.notify("Messages copied to clipboard")
+end, { desc = "Copy :messages output to system clipboard" })
