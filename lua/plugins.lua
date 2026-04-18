@@ -440,6 +440,18 @@ require('lazy').setup({
 			      -- annars: tyst
 			    end,
 			  },
+			  -- Omnisharp occasionally emits malformed RPC messages; LSP
+			  -- flags them as INVALID_SERVER_MESSAGE. Server keeps running,
+			  -- so the error is just noise. Swallow only that specific code.
+			  on_error = function(code, err)
+			    if code == vim.lsp.client_errors.INVALID_SERVER_MESSAGE then
+			      return
+			    end
+			    vim.notify(
+			      ("LSP[omnisharp]: %s"):format(vim.inspect(err)),
+			      vim.log.levels.ERROR
+			    )
+			  end,
 			})
 
 			vim.lsp.config('html', {
