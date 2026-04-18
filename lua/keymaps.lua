@@ -74,6 +74,7 @@ vim.keymap.set('v', '>', '>gv', { noremap = true, silent = true, desc = 'Indent 
 -- WHICH-KEY SETTINGS (FANCY HELPER FOR <LEADER>)
 --------------------------------------------------------------------------
 local normal_mappings = {
+    -- Grouped prefixes (have sub-keys underneath)
     { "<leader>b", group = "Buffer" },
     { "<leader>b_", hidden = true },
     { "<leader>c", group = "Code" },
@@ -88,6 +89,16 @@ local normal_mappings = {
     { "<leader>p_", hidden = true },
     { "<leader>l", group = "Latex" },
     { "<leader>l_", hidden = true },
+    -- Standalone leader keys (labels just for the which-key popup)
+    { "<leader>a",        desc = "Aerial (symbol outline)" },
+    { "<leader>e",        desc = "Focus file tree" },
+    { "<leader>h",        desc = "Help / tips" },
+    { "<leader>t",        desc = "Terminal here" },
+    { "<leader>r",        desc = "Reload config" },
+    { "<leader>/",        desc = "Buffer fuzzy search" },
+    { "<leader>.",        desc = "Browse files" },
+    { "<leader>,",        desc = "Browse files (incl. hidden)" },
+    { "<leader><leader>", desc = "Find file" },
   }
 
 
@@ -118,7 +129,6 @@ vim.keymap.set({"n", "v"}, 't', ':bnext<CR>', {noremap = true, silent = true})
 -- TELESCOPE KEYMAPS
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = 'Files' })
-vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Word' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Grep' })
 vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = 'String (under cursor)' })
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = 'Diagnostics' })
@@ -151,28 +161,21 @@ end, { desc = 'Browse files' })
 vim.keymap.set('n', '<leader>cd', require('telescope.builtin').lsp_definitions, { desc = 'Goto definition (gd)' })
 vim.keymap.set('n', '<leader>cf', require('telescope.builtin').lsp_references, { desc = 'Goto references (gr)' })
 vim.keymap.set('n', '<leader>ci', require('telescope.builtin').lsp_implementations, { desc = 'Goto implementation (gi)' })
-vim.keymap.set('n', '<leader>ch', vim.lsp.buf.hover, { desc = 'Hover documentation (gh)' })
-vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help, { desc = 'Signature documentation (gk)' })
+vim.keymap.set('n', '<leader>ch', vim.lsp.buf.hover, { desc = 'Hover documentation (go)' })
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename symbol (F2)' })
+vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { desc = 'Rename symbol (F2)' })
+vim.keymap.set('n', '<leader>ct', ':retab!<CR>', { desc = ':retab!' })
+vim.keymap.set('n', '<leader>cc', require('functions').toggle_chars, { desc = 'Toggle invisible characters' })
 -- non leader ones...
 vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'Goto definition' })
 vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Goto references' })
 vim.keymap.set('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Goto Implementation' })
 vim.keymap.set('n', 'go', vim.lsp.buf.hover, { desc = 'Hover documentation' })
-vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, { desc = 'Signature documentation' })
 -- diagnostic keymaps
 vim.keymap.set('n', '<leader>gp', vim.diagnostic.goto_prev, { desc = 'Previous message' })
 vim.keymap.set('n', '<leader>gn', vim.diagnostic.goto_next, { desc = 'Next message' })
 vim.keymap.set('n', '<leader>gf', vim.diagnostic.open_float, { desc = 'Floating diagnostic message' })
 vim.keymap.set('n', '<leader>gl', vim.diagnostic.setloclist, { desc = 'List' })
-
-vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'rename symbol (f2)' })
-vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { desc = 'rename symbol (f2)' })
-
--- Keymap to run :retab!
-vim.keymap.set('n', '<leader>ct', ':retab!<CR>', { desc = ':retab!' })
-
--- Keymap to show invisible characters (like tabs and trailing spaces)
-vim.keymap.set('n', '<leader>cc', require('functions').toggle_chars, { desc = 'Toggle invisible characters' })
 
 -- workspace stuff, would we ever care about this?
 --vim.keymap.set('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'Symbols' })
@@ -186,48 +189,44 @@ vim.keymap.set('n', '<leader>cc', require('functions').toggle_chars, { desc = 'T
 -- DEBUGGER KEYMAPS (requires dap)
 --------------------------------------------------------------------------
 local dap = require('dap')
+
+-- Breakpoint toggles always make sense (whether or not a session is running).
 vim.keymap.set("n", "<leader>db", ":PBToggleBreakpoint<CR>", { noremap = true, silent = true, desc = "Toggle a breakpoint" })
-vim.keymap.set("n", "<leader>dB", ":PBSetConditionalBreakpoint<CR>", { noremap = true, silent = true, desc = "Conditional brealpoint" })
-vim.keymap.set('n', '<leader>dr', dap.continue, { noremap = true, silent = true, desc = 'Run/Continue debugging (C-c)' })
-vim.keymap.set('n', '<leader>do', dap.step_over, { noremap = true, silent = true, desc = 'Step over (C-o)' })
-vim.keymap.set('n', '<leader>di', dap.step_into, { noremap = true, silent = true, desc = 'Step into (C-i)' })
-vim.keymap.set('n', '<leader>du', dap.step_out, { noremap = true, silent = true, desc = 'Step out (C-u)' })
+vim.keymap.set("n", "<leader>dB", ":PBSetConditionalBreakpoint<CR>", { noremap = true, silent = true, desc = "Conditional breakpoint" })
 
--- Create a keymap to disconnect debugger and close DAP UI
-vim.keymap.set('n', '<leader>dq', function()
-  require('dap').terminate()  -- Terminate the debugging session
-  require('dapui').close()    -- Close the DAP UI
-end, { noremap = true, silent = true, desc = 'Quit debugger' })
+-- Stepping/quit keys only do something while debugging; wrap them so we print
+-- "Debugger is not running" instead of throwing dap errors.
+local function is_debugging() return dap.session() ~= nil end
 
-
--- Function to check if the debugger is active
-local function is_debugging()
-  return dap.session() ~= nil  -- Returns true if a debugging session is active
-end
-
--- Create a conditional keymap function
 local function conditional_keymap(mode, key, command, options)
   options = options or { noremap = true, silent = true }
-  
-  -- Wrap the command with a check for active debugging
   vim.keymap.set(mode, key, function()
     if is_debugging() then
-      command()  -- Execute the command if debugging is active
+      command()
     else
-      print("Debugger is not running")  -- Optionally notify if not debugging
+      print("Debugger is not running")
     end
   end, options)
 end
 
--- Example: Set keymaps that only work when the debugger is active
-conditional_keymap('n', '<C-c>', dap.continue, { desc = 'Continue debugging' })
-conditional_keymap('n', '<C-o>', dap.step_over, { desc = 'Step over' })
-conditional_keymap('n', '<C-i>', dap.step_into, { desc = 'Step into' })
-conditional_keymap('n', '<C-u>', dap.step_out, { desc = 'Step out' })
-conditional_keymap('n', '<C-q>', function()
+local function quit_debugger()
   dap.terminate()
   require('dapui').close()
-end, { desc = 'Quit debugger' })
+end
+
+-- `<leader>d*` is the "intentional" debug menu; `<C-*>` is the quick chord.
+-- Both go through conditional_keymap so they share the same "not running"
+-- behaviour.
+conditional_keymap('n', '<leader>dr', dap.continue,   { desc = 'Run/Continue debugging (C-c)' })
+conditional_keymap('n', '<leader>do', dap.step_over,  { desc = 'Step over (C-o)' })
+conditional_keymap('n', '<leader>di', dap.step_into,  { desc = 'Step into (C-i)' })
+conditional_keymap('n', '<leader>du', dap.step_out,   { desc = 'Step out (C-u)' })
+conditional_keymap('n', '<leader>dq', quit_debugger,  { desc = 'Quit debugger (C-q)' })
+conditional_keymap('n', '<C-c>',      dap.continue,   { desc = 'Continue debugging' })
+conditional_keymap('n', '<C-o>',      dap.step_over,  { desc = 'Step over' })
+conditional_keymap('n', '<C-i>',      dap.step_into,  { desc = 'Step into' })
+conditional_keymap('n', '<C-u>',      dap.step_out,   { desc = 'Step out' })
+conditional_keymap('n', '<C-q>',      quit_debugger,  { desc = 'Quit debugger' })
 
 
 --------------------------------------------------------------------------

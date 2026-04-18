@@ -129,6 +129,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local bufnr = args.buf
     -- keep your on_attach Format command available
     pcall(on_attach, nil, bufnr)
+
+    -- Auto-trigger signature help in insert mode on the server's trigger
+    -- characters (typically "(" and ","). Replaces the old `gs`/`<leader>cs`
+    -- mappings which only worked in normal mode, where they're useless.
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local triggers = client
+      and vim.tbl_get(client.server_capabilities or {}, 'signatureHelpProvider', 'triggerCharacters')
+    if triggers and not vim.tbl_isempty(triggers) then
+      vim.api.nvim_create_autocmd('TextChangedI', {
+        buffer = bufnr,
+        callback = function()
+          local col = vim.api.nvim_win_get_cursor(0)[2]
+          if col == 0 then return end
+          local ch = vim.api.nvim_get_current_line():sub(col, col)
+          if vim.tbl_contains(triggers, ch) then
+            vim.lsp.buf.signature_help()
+          end
+        end,
+      })
+    end
   end,
 })
 
