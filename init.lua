@@ -17,39 +17,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- make nvim start from last position
-vim.api.nvim_create_augroup("RememberLastPosition", { clear = true })
-vim.api.nvim_create_autocmd("BufReadPost", {
-	group = "RememberLastPosition",
-	pattern = "*",
-	callback = function()
-		local last_line = vim.fn.line("'\"")
-		local last_line_in_buffer = vim.fn.line("$")
-		if last_line > 0 and last_line <= last_line_in_buffer then
-			vim.api.nvim_win_set_cursor(0, { last_line, 0 })
-		end
-	end,
-})
-
 -- require these ones
 require('plugins')
-require('pluginscfg')
 require('options')
 require('keymaps')
 
-
--- Always-on right-side chrome: aerial (symbol outline) + neo-tree (file tree).
--- When launched with no file, land inside neo-tree so we can pick one.
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    require('aerial').open({ focus = false })
-    if vim.fn.argc() == 0 then
-      vim.cmd('Neotree focus')
-    else
-      vim.cmd('Neotree show')
-    end
-  end,
-})
 
 -- `:q` / `:q!` override for the sidebar setup.
 --
@@ -91,15 +63,3 @@ vim.api.nvim_create_user_command("Q", function(opts)
   vim.cmd(opts.bang and "qall!" or "qall")
 end, { bang = true })
 vim.cmd([[cnoreabbrev <expr> q (getcmdtype() == ':' && getcmdline() == 'q') ? 'Q' : 'q']])
-
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "tex",
-  callback = function()
-    vim.opt_local.textwidth = 0
-    vim.opt_local.autoindent = false
-    vim.opt_local.smartindent = false
-    vim.opt_local.cindent = false
-    vim.opt_local.indentexpr = ""
-  end,
-})
