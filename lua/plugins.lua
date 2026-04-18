@@ -265,7 +265,6 @@ require('lazy').setup({
 	-- GIT PLUGINS
 	---------------------------------------------------------------
 	'tpope/vim-fugitive', -- so we can run :Git from vim
-	'tpope/vim-rhubarb',
 
 	-- persistence, tool to save/load vim sessions
 	{
@@ -578,9 +577,6 @@ require('lazy').setup({
 		main = 'ibl',
 		opts = {},
 	},
-
-	-- "gc" to comment visual regions/lines
-	{ 'numToStr/Comment.nvim', opts = {} },
 
 	-- Highlight, edit, and navigate code
 	{
