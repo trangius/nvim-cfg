@@ -346,11 +346,13 @@ vim.keymap.set('n', '<leader>cx', functions.run_file, { noremap = true, silent =
 --------------------------------------------------------------------------
 -- FIX COMMON TYPOS
 --------------------------------------------------------------------------
+-- Note: do NOT alias Q → q or Q! → q!. `:Q` is a real user command in
+-- init.lua that handles :q properly in the aerial+neo-tree setup, and the
+-- q → Q cnoreabbrev there relies on Q staying Q on its way to the command.
 vim.cmd([[
     cnoreabbrev W! w!
     cnoreabbrev W1 w!
     cnoreabbrev w1 w!
-    cnoreabbrev Q! q!
     cnoreabbrev Q1 q!
     cnoreabbrev q1 q!
     cnoreabbrev Qa! qa!
@@ -364,7 +366,6 @@ vim.cmd([[
     cnoreabbrev wQ1 wq!
     cnoreabbrev WQ1 wq!
     cnoreabbrev W w
-    cnoreabbrev Q q
     cnoreabbrev Qa qa
     cnoreabbrev Qall qall
 ]])

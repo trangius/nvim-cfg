@@ -109,7 +109,7 @@ require('lazy').setup({
 		},
 		config = function()
 			require("neo-tree").setup({
-				close_if_last_window = true,
+				close_if_last_window = false,
 				-- Never open files into these window types; without "aerial"
 				-- here, neo-tree would sometimes replace the aerial sidebar
 				-- with the opened file.
