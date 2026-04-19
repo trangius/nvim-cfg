@@ -27,10 +27,7 @@ require('lazy').setup({
                 keymaps = {
                     ["<Esc>"] = { callback = function() vim.cmd("wincmd p") end, desc = "Return to editor window" },
                 },
-                -- Auto-open aerial only when the buffer has a working backend
-                -- (treesitter/LSP/markdown symbols). Empty buffer or plain text
-                -- files don't spawn an empty outline.
-                open_automatic = true,
+                open_automatic = false,
                 -- Default nerd icons ship with a trailing space AND render.lua
                 -- adds another space, creating a double gap. This table replaces
                 -- the defaults with trimmed Codicon glyphs — render's one space
@@ -128,19 +125,6 @@ require('lazy').setup({
 					hijack_netrw_behavior = "disabled",
 				},
 			})
-
-			-- Neo-tree always opens on startup; aerial is handled by its own
-			-- open_automatic config and only shows up for supported buffers.
-			-- When launched with no file, land inside neo-tree so we can pick one.
-			vim.api.nvim_create_autocmd("VimEnter", {
-				callback = function()
-					if vim.fn.argc() == 0 then
-						vim.cmd('Neotree focus')
-					else
-						vim.cmd('Neotree show')
-					end
-				end,
-			})
 		end,
 	},
 
@@ -232,6 +216,8 @@ require('lazy').setup({
 				extensions = {
 					file_browser = {
 						git_status = true,
+						-- Folders listed first, then files; alphabetical within each group.
+						grouped = true,
 					},
 				},
 			}
@@ -298,15 +284,6 @@ require('lazy').setup({
 	-- GIT PLUGINS
 	---------------------------------------------------------------
 	'tpope/vim-fugitive', -- so we can run :Git from vim
-
-	-- persistence, tool to save/load vim sessions
-	{
-		"folke/persistence.nvim",
-		event = "BufReadPre", -- this will only start session saving when an actual file was opened
-		opts = {
-		-- add any custom options here
-		}
-	},
 
 	-- Adds git related signs to the gutter, as well as utilities for managing changes
 	{

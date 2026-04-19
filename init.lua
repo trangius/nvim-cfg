@@ -22,6 +22,7 @@ require('plugins')
 require('options')
 require('keymaps')
 require('scrollbar').setup()
+require('last_edit').setup()
 
 -- Copy :messages output to the system clipboard.
 vim.api.nvim_create_user_command("CopyMessages", function()

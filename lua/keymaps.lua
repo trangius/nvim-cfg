@@ -85,7 +85,7 @@ local normal_mappings = {
     { "<leader>d_", hidden = true },
     { "<leader>f", group = "Find" },
     { "<leader>f_", hidden = true },
-    { "<leader>p", group = "Persistence" },
+    { "<leader>p", group = "Last edit" },
     { "<leader>p_", hidden = true },
     { "<leader>l", group = "Latex" },
     { "<leader>l_", hidden = true },
@@ -318,12 +318,10 @@ end, { desc = 'Search/Replace visual selection' })
 
 
 --------------------------------------------------------------------------
--- PERSISTENCE KEYMAPS
+-- LAST EDIT KEYMAPS
 --------------------------------------------------------------------------
--- restore the session for the current directory
-vim.keymap.set("n", "<leader>pl", [[<cmd>lua require("persistence").load()<cr>]], { desc = "Load lasts local session (current directory)" })
-vim.keymap.set("n", "<leader>pg", [[<cmd>lua require("persistence").load({ last = true })<cr>]], { desc = "Load last global session" })
-vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("persistence").stop()<cr>]], { desc = "Stop persistence" })
+vim.keymap.set("n", "<leader>pl", [[<cmd>lua require("last_edit").load()<cr>]], { desc = "Jump to last edited buffer + line (this folder)" })
+vim.keymap.set("n", "<leader>pd", [[<cmd>lua require("last_edit").clear()<cr>]], { desc = "Clear last-edit marker for this folder" })
 
 
 --------------------------------------------------------------------------
