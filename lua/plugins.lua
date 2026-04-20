@@ -252,14 +252,6 @@ require('lazy').setup({
 	-- Undo tree visualizer
 	'mbbill/undotree',
 
-	-- Pretty diagnostics / quickfix / LSP list panel
-	{
-		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {},
-		cmd = "Trouble",
-	},
-
 	-- Project-wide find/replace with live preview. Lives in a single buffer:
 	-- top has Search/Replace/Files/Flags fields, below shows ripgrep matches
 	-- that you can edit inline or apply across all files.

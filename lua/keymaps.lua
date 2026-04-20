@@ -89,15 +89,15 @@ local normal_mappings = {
     { "<leader>p_", hidden = true },
     { "<leader>l", group = "Latex" },
     { "<leader>l_", hidden = true },
-    { "<leader>s", group = "Search/Replace" },
-    { "<leader>s_", hidden = true },
+    { "<leader>r", group = "Replace" },
+    { "<leader>r_", hidden = true },
     -- Standalone leader keys (labels just for the which-key popup)
     { "<leader>a",        desc = "Focus aerial (symbol outline)" },
     { "<leader>e",        desc = "Focus file tree" },
     { "<leader>h",        desc = "Help / tips" },
     { "<leader>q",        desc = "Smart quit (all)" },
     { "<leader>t",        desc = "Terminal here" },
-    { "<leader>r",        desc = "Reload config" },
+    { "<leader>R",        desc = "Reload config" },
     { "<leader>/",        desc = "Buffer fuzzy search" },
     { "<leader>.",        desc = "Browse files" },
     { "<leader>,",        desc = "Browse files (incl. hidden)" },
@@ -131,15 +131,12 @@ vim.keymap.set({"n", "v"}, 't', ':bnext<CR>', {noremap = true, silent = true})
 --------------------------------------------------------------------------
 -- TELESCOPE KEYMAPS
 --------------------------------------------------------------------------
-vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = 'Files' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Grep' })
 vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = 'String (under cursor)' })
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = 'Diagnostics' })
 vim.keymap.set('n', '<leader>fe', require('telescope.builtin').resume, { desc = 'Resume' })
-vim.keymap.set('n', '<leader>ft', require('telescope.builtin').git_files, { desc = 'Git files' })
 vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles, { desc = 'Recently opened files' })
 vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = 'Find existing buffers' })
-vim.keymap.set('n', '<C-b>', require('telescope.builtin').buffers, { desc = 'Find existing buffers' })
 vim.keymap.set('n', '<leader><leader>', require('telescope.builtin').find_files, { desc = 'Find file' })
 --vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Help' })
 
@@ -179,7 +176,6 @@ vim.keymap.set('n', '<leader>gp', vim.diagnostic.goto_prev, { desc = 'Previous m
 vim.keymap.set('n', '<leader>gn', vim.diagnostic.goto_next, { desc = 'Next message' })
 vim.keymap.set('n', '<leader>gf', vim.diagnostic.open_float, { desc = 'Floating diagnostic message' })
 vim.keymap.set('n', '<leader>gl', vim.diagnostic.setloclist, { desc = 'List' })
-vim.keymap.set('n', '<leader>gt', '<cmd>Trouble diagnostics toggle<CR>', { desc = 'Toggle trouble panel' })
 
 -- workspace stuff, would we ever care about this?
 --vim.keymap.set('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'Symbols' })
@@ -253,7 +249,6 @@ vim.keymap.set({'n', 'v', 'i'}, '<C-k>', function() require('aerial').prev() end
 -- NEO-TREE KEYMAPS
 --------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>e', '<cmd>Neotree focus<CR>', { desc = 'Focus file tree (open if needed)' })
-vim.keymap.set('n', '<leader>fl', '<cmd>Neotree reveal<CR>', { desc = 'Reveal current file in tree' })
 
 
 
@@ -303,18 +298,18 @@ local function grug_far_float(opts)
   end, { buffer = 0, silent = true })
 end
 
-vim.keymap.set('n', '<leader>sr', function() grug_far_float() end,
-  { desc = 'Search/Replace in project' })
-vim.keymap.set('n', '<leader>sw', function()
+vim.keymap.set('n', '<leader>rr', function() grug_far_float() end,
+  { desc = 'Replace in project' })
+vim.keymap.set('n', '<leader>rw', function()
   grug_far_float({ prefills = { search = vim.fn.expand('<cword>') } })
-end, { desc = 'Search/Replace word under cursor' })
-vim.keymap.set('v', '<leader>sr', function()
+end, { desc = 'Replace word under cursor' })
+vim.keymap.set('v', '<leader>rr', function()
   local saved = vim.fn.getreg('"')
   vim.cmd('noautocmd normal! y')
   local selection = vim.fn.getreg('"')
   vim.fn.setreg('"', saved)
   grug_far_float({ prefills = { search = selection } })
-end, { desc = 'Search/Replace visual selection' })
+end, { desc = 'Replace visual selection' })
 
 
 --------------------------------------------------------------------------
@@ -376,7 +371,7 @@ local function reload_config()
 end
 
 -- Mappar <leader>r för att reloada konfigurationen
-vim.keymap.set('n', '<leader>r', reload_config, { noremap = true, silent = true, desc = 'Reload config' })
+vim.keymap.set('n', '<leader>R', reload_config, { noremap = true, silent = true, desc = 'Reload config' })
 
 
 
