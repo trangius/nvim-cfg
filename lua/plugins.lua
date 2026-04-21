@@ -6,9 +6,7 @@ require('lazy').setup({
 	    'trangius/onedarkbleak.nvim',
 	    priority = 1000,
 	    config = function()
-	        require('onedarkbleak').setup({
-	            colors = { bg0 = "#0e0e0e", bg_d = "#0a0a0a" },
-	        })
+	        require('onedarkbleak').setup()
 	        vim.cmd.colorscheme 'onedarkbleak'
 	    end,
 	},
