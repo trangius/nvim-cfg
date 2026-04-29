@@ -42,12 +42,6 @@ end
 
 function M.setup()
 	vim.api.nvim_create_autocmd("VimLeavePre", { callback = save })
-	vim.api.nvim_create_autocmd("VimEnter", {
-		nested = true,
-		callback = function()
-			if vim.fn.argc() == 0 then M.load() end
-		end,
-	})
 end
 
 return M
