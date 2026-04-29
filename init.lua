@@ -21,6 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 require('plugins')
 require('options')
 require('keymaps')
+require('treesitter')
 require('scrollbar').setup()
 require('last_edit').setup()
 
