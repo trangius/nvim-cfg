@@ -6,6 +6,9 @@
 -- To add a new language: drop its parser into ~/.local/share/nvim/site/parser/
 -- and its queries into ~/.local/share/nvim/site/queries/<lang>/.
 
+-- Filetypes nvim doesn't ship with.
+vim.filetype.add({ extension = { jai = 'jai' } })
+
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('builtin_treesitter', { clear = true }),
     callback = function(args)

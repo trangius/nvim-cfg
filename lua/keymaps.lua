@@ -55,6 +55,9 @@ vim.keymap.set({"n", "v"}, "K", "10k", { noremap = true })
 vim.keymap.set({"n", "v"}, "J", "10j", { noremap = true })
 vim.keymap.set({"n", "v", "o"}, "H", "^", { noremap = true })
 vim.keymap.set({"n", "v", "o"}, "L", "$", { noremap = true })
+-- join lines (J is taken by 10j above)
+vim.keymap.set({"n", "v"}, "<leader>j", "J", { noremap = true, desc = "Join lines" })
+vim.keymap.set({"n", "v"}, "<leader>J", "gJ", { noremap = true, desc = "Join lines (no space)" })
 -- use hop
 vim.keymap.set('n', '<C-h>', require'hop'.hint_char1, { noremap = true, silent = true, desc = 'Hop to char' })
 
@@ -95,6 +98,8 @@ local normal_mappings = {
     { "<leader>a",        desc = "Focus aerial (symbol outline)" },
     { "<leader>e",        desc = "Focus file tree" },
     { "<leader>h",        desc = "Help / tips" },
+    { "<leader>j",        desc = "Join lines" },
+    { "<leader>J",        desc = "Join lines (no space)" },
     { "<leader>q",        desc = "Smart quit (all)" },
     { "<leader>t",        desc = "Terminal here" },
     { "<leader>R",        desc = "Reload config" },

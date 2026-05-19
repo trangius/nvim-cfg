@@ -421,6 +421,20 @@ require('lazy').setup({
 			  automatic_installation = true,
 			  automatic_enable = true,
 			})
+
+			-- Jails: experimental Jai LSP server (not in nvim-lspconfig/mason).
+			-- Built from ~/repos/xJails. Needs the Jai compiler on PATH; per-project
+			-- jails.json controls roots/local_modules.
+			local jails_bin = vim.fn.expand('~/repos/xJails/bin/jails')
+			if vim.fn.executable(jails_bin) == 1 then
+			  vim.lsp.config('jails', {
+			    cmd = { jails_bin },
+			    filetypes = { 'jai' },
+			    root_markers = { 'jails.json', 'build.jai', '.git' },
+			    capabilities = capabilities,
+			  })
+			  vim.lsp.enable('jails')
+			end
 		end,
 	},
 
